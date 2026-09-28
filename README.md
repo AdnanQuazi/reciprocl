@@ -1,33 +1,47 @@
-### Reciprocl
+# Reciprocl
 
-Form Builder
+**Reciprocl** is a modern, headless Form Builder built natively for the Frappe Framework. 
 
-### Installation
+It provides a beautiful React-based drag-and-drop interface for users to build forms. When a form is published, Reciprocl dynamically generates a native Frappe `DocType` and fully functional REST APIs to handle submissions, effectively giving you Typeform-like capabilities directly integrated with your Frappe database.
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+## Architecture
 
-```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
-bench install-app reciprocl
-```
+Reciprocl uses a two-tier architecture:
+1. **The Blueprint (Reciprocl Form):** A master DocType that stores form metadata, branching logic, and integration mappings as a JSON schema.
+2. **The Data Store (Auto-generated DocTypes):** When a form is published, a flat, dedicated DocType (e.g. `Form Contact`) is generated dynamically purely for fast, native data storage and retrieval.
 
-### Contributing
+## Installation
 
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+You can install Reciprocl like any standard Frappe app.
 
 ```bash
-cd apps/reciprocl
-pre-commit install
+# Get the app
+bench get-app https://github.com/AdnanQuazi/reciprocl
+
+# Install on your site
+bench --site [your-site-name] install-app reciprocl
 ```
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+## Development
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
+Reciprocl uses Vite and React for the frontend interface.
 
-### License
+### Running the Backend
+Start your Frappe bench as usual:
+```bash
+bench start
+```
 
-mit
+### Running the Frontend
+In a separate terminal, navigate to the frontend directory and run the Vite dev server:
+```bash
+cd apps/reciprocl/frontend
+npm install
+npm run dev
+```
+
+The frontend will run on `http://localhost:5173` and automatically proxy API requests to your Frappe backend.
+
+## License
+
+MIT
