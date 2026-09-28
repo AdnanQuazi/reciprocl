@@ -195,8 +195,9 @@ function PublicForm() {
       } else if (data.exc) {
         alert("Error: " + JSON.parse(data.exc)[0])
       }
-    } catch (e) {
+    } catch (error) {
       alert("Error submitting form")
+      console.error(error)
     }
   }
 
