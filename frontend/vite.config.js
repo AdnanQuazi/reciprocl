@@ -1,18 +1,21 @@
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      '^/(api|assets|files)': {
-        target: 'http://127.0.0.1:8001',
-        changeOrigin: true,
-        headers: {
-          Host: 'library.localhost'
-        }
-      }
-    }
-  }
-})
+	base: "/assets/reciprocl/frontend/",
+	plugins: [react(), tailwindcss()],
+	server: {
+		proxy: {
+			"/api": {
+				target: "http://library.localhost:8001",
+				changeOrigin: true,
+			},
+		},
+	},
+	build: {
+		outDir: "../reciprocl/public/frontend",
+		emptyOutDir: true,
+	},
+});

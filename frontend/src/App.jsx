@@ -265,8 +265,12 @@ function PublicForm() {
 }
 
 function App() {
+  const getBasename = () => {
+    return window.location.pathname.startsWith('/reciprocl') ? '/reciprocl' : '/';
+  };
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={getBasename()}>
       <Routes>
         <Route path="/" element={<Builder />} />
         <Route path="/f/:formId" element={<PublicForm />} />
