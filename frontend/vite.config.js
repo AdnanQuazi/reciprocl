@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
-export default defineConfig({
-	base: "/assets/reciprocl/frontend/",
+export default defineConfig(({ mode }) => ({
+	base: mode === "production" ? "/assets/reciprocl/frontend/" : "/",
 	plugins: [react(), tailwindcss()],
 	server: {
 		proxy: {
@@ -18,4 +18,4 @@ export default defineConfig({
 		outDir: "../reciprocl/public/frontend",
 		emptyOutDir: true,
 	},
-});
+}));
