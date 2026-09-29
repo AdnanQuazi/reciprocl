@@ -36,8 +36,8 @@ bench start
 In a separate terminal, navigate to the frontend directory and run the Vite dev server:
 ```bash
 cd apps/reciprocl/frontend
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 The frontend will run on `http://localhost:5173` and automatically proxy API requests to your Frappe backend.
