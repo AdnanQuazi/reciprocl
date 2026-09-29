@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-	base: "/assets/reciprocl/frontend/",
+	base: process.env.NODE_ENV === "production" ? "/assets/reciprocl/frontend/" : "/",
 	plugins: [react(), tailwindcss()],
 	server: {
 		proxy: {
