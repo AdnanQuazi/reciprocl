@@ -5,6 +5,8 @@ app_description = "Form Builder"
 app_email = "adnan@example.com"
 app_license = "mit"
 
+after_install = "reciprocl.api.setup_doctypes"
+
 use_json_request_body = True
 export_python_type_annotations = True
 require_type_annotated_api_methods = True

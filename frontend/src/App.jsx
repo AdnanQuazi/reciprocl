@@ -5,7 +5,7 @@ function Builder() {
   const [formTitle, setFormTitle] = useState('')
   const [fields, setFields] = useState([])
   const [isPublishing, setIsPublishing] = useState(false)
-  const [publishedId, setPublishedId] = useState('')
+  const [published, setPublished] = useState(null) // { form_key, share_url }
 
   const addField = (type) => {
     setFields([...fields, { 
@@ -34,13 +34,17 @@ function Builder() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'X-Frappe-CSRF-Token': window.csrf_token || ''
         },
         body: JSON.stringify({ form_title: formTitle, fields: fields })
       })
       const data = await response.json()
       if (data.message && data.message.message === "success") {
-        setPublishedId(data.message.form_id)
+        setPublished({
+          form_key: data.message.form_key,
+          share_url: data.message.share_url,
+        })
       } else if (data.exc) {
         alert("Error: " + JSON.parse(data.exc)[0])
       }
@@ -52,7 +56,7 @@ function Builder() {
     }
   }
 
-  if (publishedId) {
+  if (published) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center font-sans">
         <div className="bg-white p-12 rounded-3xl shadow-sm border border-slate-200 max-w-lg w-full">
@@ -62,13 +66,16 @@ function Builder() {
             </svg>
           </div>
           <h2 className="text-3xl font-bold text-slate-800 mb-4">Form Published!</h2>
-          <p className="text-slate-500 mb-8">Your form has been successfully compiled into a native Frappe DocType and is ready to receive submissions.</p>
+          <p className="text-slate-500 mb-2">Share this link to start collecting responses.</p>
+          <code className="block text-sm bg-slate-100 text-indigo-600 rounded-lg px-4 py-2 mb-8 break-all">
+            /{published.form_key}
+          </code>
           
           <div className="space-y-4">
-            <Link to={`/f/${publishedId}`} target="_blank" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-sm transition-all">
+            <Link to={`/${published.form_key}`} target="_blank" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-sm transition-all">
               Open Public Form
             </Link>
-            <button onClick={() => { setPublishedId(''); setFields([]); setFormTitle(''); }} className="block w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl shadow-sm transition-all">
+            <button onClick={() => { setPublished(null); setFields([]); setFormTitle(''); }} className="block w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl shadow-sm transition-all">
               Create Another Form
             </button>
           </div>
@@ -161,14 +168,14 @@ function Builder() {
 }
 
 function PublicForm() {
-  const { formId } = useParams()
+  const { formKey } = useParams()       // now uses formKey (the slug), not formId
   const [loading, setLoading] = useState(true)
   const [form, setForm] = useState(null)
   const [formData, setFormData] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
-    fetch(`/api/method/reciprocl.api.get_form?form_id=${formId}`)
+    fetch(`/api/method/reciprocl.api.get_form?form_key=${formKey}`)
       .then(res => res.json())
       .then(data => {
         if (data.message) {
@@ -179,15 +186,18 @@ function PublicForm() {
       })
       .catch(console.error)
       .finally(() => setLoading(false))
-  }, [formId])
+  }, [formKey])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const res = await fetch(`/api/method/reciprocl.api.submit_form`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ form_id: formId, data: formData })
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Frappe-CSRF-Token': window.csrf_token || ''
+        },
+        body: JSON.stringify({ form_key: formKey, data: formData })  // form_key, not form_id
       })
       const data = await res.json()
       if (data.message && data.message.message === "success") {
@@ -273,7 +283,7 @@ function App() {
     <BrowserRouter basename={getBasename()}>
       <Routes>
         <Route path="/" element={<Builder />} />
-        <Route path="/f/:formId" element={<PublicForm />} />
+        <Route path="/:formKey" element={<PublicForm />} />  {/* formKey slug, not formId */}
       </Routes>
     </BrowserRouter>
   )
