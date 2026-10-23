@@ -65,3 +65,17 @@ Do not wrap primitives in extra `<div>`s to restyle them. Wrappers are for layou
 - [ ] Any new color exists as a token pair in `globals.css` (light + dark) and is registered in the Tailwind theme
 - [ ] No `dark:` overrides in feature components
 - [ ] Files are in the correct directory per the architecture above
+
+### Responsive Design & Layout Rules
+1. **Mobile-First Layouts:**
+   - Always structure layouts mobile-first using Tailwind's default breakpoints (`sm:`, `md:`, `lg:`, `xl:`).
+   - Use responsive grid and flex utilities (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`) for multi-item displays.
+
+2. **No Arbitrary Widths/Heights:**
+   - STRICTLY FORBIDDEN: Fixed pixel dimensions on structural elements (e.g., `w-[420px]`, `h-[600px]`, `min-w-[800px]`).
+   - Use relative/fluid sizing: `w-full`, `max-w-screen-xl`, `flex-1`, `min-h-screen`.
+
+3. **Responsive Navigation & Tables:**
+   - For desktop sidebars, collapse into a shadcn `<Sheet>` trigger on viewports below `md:`.
+   - Wrap all `<Table>` components in an `overflow-x-auto` container to prevent mobile viewport blowout.
+   - Scale padding responsively using standard tokens (e.g., `p-4 md:p-6 lg:p-8`).
