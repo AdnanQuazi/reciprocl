@@ -43,15 +43,16 @@ const site_name = getSiteName(benchDir);
 if (!config) {
 	console.log("No common_site_config.json found, using default port 8000");
 }
-console.log(`Proxy -> http://${site_name}:${webserver_port}`);
+console.log(`Proxy default site -> http://${site_name}:${webserver_port}`);
 
 export default {
-	"^/(app|api|assets|files|private)": {
+	"^/(desk|app|login|logout|api|assets|files|private)": {
 		target: `http://127.0.0.1:${webserver_port}`,
 		ws: true,
 		secure: false,
-		headers: {
-			Host: site_name,
+		router: function (req) {
+			const site_name = req.headers.host.split(":")[0];
+			return `http://${site_name}:${webserver_port}`;
 		},
 	},
 };
