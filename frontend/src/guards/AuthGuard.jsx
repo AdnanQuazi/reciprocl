@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getAppBasePath } from '../lib/frappe';
 
@@ -12,12 +13,15 @@ import { getAppBasePath } from '../lib/frappe';
 export default function AuthGuard({ children }) {
   const { isLoggedIn, isLoading } = useAuth();
 
-  // Render nothing while the session resolves -- avoids a flash redirect
-  if (isLoading) return null;
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      const redirectTo = getAppBasePath();
+      window.location.href = '/login?redirect-to=' + redirectTo;
+    }
+  }, [isLoading, isLoggedIn]);
 
-  if (!isLoggedIn) {
-    const redirectTo = getAppBasePath();
-    window.location.href = '/login?redirect-to=' + redirectTo;
+  // Render nothing while resolving session or waiting for redirect
+  if (isLoading || !isLoggedIn) {
     return null;
   }
 
