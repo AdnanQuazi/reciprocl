@@ -7,7 +7,23 @@ import proxyOptions from "./proxyOptions";
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
 	base: mode === "production" ? "/assets/reciprocl/frontend/" : "/",
-	plugins: [react(), tailwindcss()],
+	plugins: [
+		react(),
+		tailwindcss(),
+		{
+			name: "redirect-root-to-reciprocl",
+			configureServer(server) {
+				server.middlewares.use((req, res, next) => {
+					if (req.url === "/" || req.url === "") {
+						res.writeHead(302, { Location: "/reciprocl" });
+						res.end();
+						return;
+					}
+					next();
+				});
+			},
+		},
+	],
 	server: {
 		port: 5173,
 		proxy: proxyOptions,
