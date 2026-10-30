@@ -1,6 +1,4 @@
 import json
-import random
-import string
 
 import frappe
 from frappe.utils import now_datetime
@@ -19,166 +17,12 @@ RESTRICTED_FIELDNAMES = {
 }
 
 
-def _generate_form_key() -> str:
-	"""Return a unique 8-char alphanumeric slug used for public URL routing."""
-	chars = string.ascii_letters + string.digits
-	while True:
-		key = "".join(random.choices(chars, k=8))
-		if not frappe.db.exists("Reciprocl Form", {"form_key": key}):
-			return key
-
-
 def _get_ip() -> str:
 	"""Safely extract the requester IP address."""
 	try:
 		return frappe.local.request.environ.get("REMOTE_ADDR", "")
 	except Exception:
 		return ""
-
-
-# ---------------------------------------------------------------------------
-# DocType setup — runs once at install, then lazily from publish_form
-# ---------------------------------------------------------------------------
-
-
-def setup_doctypes():
-	"""Create the two permanent Reciprocl DocTypes if they don't already exist."""
-	_setup_reciprocl_form()
-	_setup_reciprocl_submission()
-
-
-def _setup_reciprocl_form():
-	if frappe.db.exists("DocType", "Reciprocl Form"):
-		return
-
-	doc = frappe.get_doc(
-		{
-			"doctype": "DocType",
-			"name": "Reciprocl Form",
-			"module": "Reciprocl",
-			"custom": 1,
-			"autoname": "format:REC-{####}",
-			"title_field": "form_title",
-			"permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
-			"fields": [
-				{
-					"fieldname": "form_title",
-					"label": "Form Title",
-					"fieldtype": "Data",
-					"reqd": 1,
-					"in_list_view": 1,
-				},
-				{
-					"fieldname": "form_key",
-					"label": "Public URL Key",
-					"fieldtype": "Data",
-					"read_only": 1,
-					"in_list_view": 1,
-					"description": "Short slug for the public share URL: /{form_key}",
-				},
-				{
-					"fieldname": "status",
-					"label": "Status",
-					"fieldtype": "Select",
-					"options": "Draft\nPublished\nClosed",
-					"default": "Draft",
-					"in_list_view": 1,
-					"in_standard_filter": 1,
-				},
-				{
-					"fieldname": "target_doctype",
-					"label": "Target DocType",
-					"fieldtype": "Data",
-					"read_only": 1,
-					"description": "Auto-generated DocType storing this form's responses as real SQL columns.",
-				},
-				{
-					"fieldname": "schema_json",
-					"label": "Schema JSON",
-					"fieldtype": "Code",
-					"options": "JSON",
-				},
-				{
-					"fieldname": "settings_json",
-					"label": "Settings JSON",
-					"fieldtype": "Code",
-					"options": "JSON",
-					"description": "Success message, expiry date, etc.",
-				},
-				{
-					"fieldname": "integration_json",
-					"label": "Integration JSON",
-					"fieldtype": "Code",
-					"options": "JSON",
-					"description": "Phase 3: field mappings to HR, CRM, ERPNext DocTypes.",
-				},
-			],
-		}
-	)
-	doc.insert(ignore_permissions=True)
-
-
-def _setup_reciprocl_submission():
-	if frappe.db.exists("DocType", "Reciprocl Submission"):
-		return
-
-	doc = frappe.get_doc(
-		{
-			"doctype": "DocType",
-			"name": "Reciprocl Submission",
-			"module": "Reciprocl",
-			"custom": 1,
-			"autoname": "format:RSUB-{#####}",
-			"title_field": "form",
-			"permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
-			"fields": [
-				{
-					"fieldname": "form",
-					"label": "Form",
-					"fieldtype": "Link",
-					"options": "Reciprocl Form",
-					"reqd": 1,
-					"in_list_view": 1,
-					"in_standard_filter": 1,
-				},
-				{
-					"fieldname": "response_doc",
-					"label": "Response Doc",
-					"fieldtype": "Data",
-					"read_only": 1,
-					"in_list_view": 1,
-					"description": "Name/ID of the row in the target DocType.",
-				},
-				{
-					"fieldname": "submitted_at",
-					"label": "Submitted At",
-					"fieldtype": "Datetime",
-					"in_list_view": 1,
-				},
-				{
-					"fieldname": "submitter_email",
-					"label": "Submitter Email",
-					"fieldtype": "Data",
-					"options": "Email",
-				},
-				{
-					"fieldname": "ip_address",
-					"label": "IP Address",
-					"fieldtype": "Data",
-				},
-				{
-					"fieldname": "status",
-					"label": "Status",
-					"fieldtype": "Select",
-					"options": "Pending\nReviewed\nSpam",
-					"default": "Pending",
-					"in_list_view": 1,
-					"in_standard_filter": 1,
-				},
-			],
-		}
-	)
-	doc.insert(ignore_permissions=True)
 
 
 def _create_target_doctype(form_key: str, fields: list) -> str:
@@ -239,31 +83,30 @@ def publish_form(form_title: str, fields: str | list):
 	Create a new Reciprocl Form and its dedicated response DocType.
 	Returns: { message, form_id, form_key, share_url }
 	"""
-	setup_doctypes()
-
 	if isinstance(fields, str):
 		fields = json.loads(fields)
 
-	form_key = _generate_form_key()
-	target_doctype = _create_target_doctype(form_key, fields)
-
+	# form_key is generated automatically in ReciproclForm.before_insert
+	target_doctype_fields = fields  # resolved after we have the key
 	master = frappe.get_doc(
 		{
 			"doctype": "Reciprocl Form",
 			"form_title": form_title,
-			"form_key": form_key,
 			"status": "Published",
-			"target_doctype": target_doctype,
 			"schema_json": json.dumps(fields),
 		}
 	)
 	master.insert(ignore_permissions=True)
 
+	# Now create the target DocType with the auto-generated form_key
+	target_doctype = _create_target_doctype(master.form_key, target_doctype_fields)
+	master.db_set("target_doctype", target_doctype)
+
 	return {
 		"message": "success",
 		"form_id": master.name,
-		"form_key": form_key,
-		"share_url": f"/{form_key}",
+		"form_key": master.form_key,
+		"share_url": f"/{master.form_key}",
 	}
 
 
