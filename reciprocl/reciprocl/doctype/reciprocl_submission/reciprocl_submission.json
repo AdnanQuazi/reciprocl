@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "format:RSUB-{#####}",
+ "creation": "2026-10-29 00:00:00.000000",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "form",
+  "response_doc",
+  "submitted_at",
+  "column_break_1",
+  "submitter_email",
+  "ip_address",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "form",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Form",
+   "options": "Reciprocl Form",
+   "reqd": 1
+  },
+  {
+   "fieldname": "response_doc",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Response Doc",
+   "read_only": 1,
+   "description": "Name/ID of the row in the target DocType."
+  },
+  {
+   "fieldname": "submitted_at",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Submitted At"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "submitter_email",
+   "fieldtype": "Data",
+   "label": "Submitter Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "ip_address",
+   "fieldtype": "Data",
+   "label": "IP Address"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Pending\nReviewed\nSpam"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Reciprocl",
+ "name": "Reciprocl Submission",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "submitted_at",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "form",
+ "track_changes": 0
+}
+
