@@ -1,6 +1,8 @@
 // Local display fixtures, not a Frappe data contract.
 export const mainWorkspaceMock = {
   workspace: { id: 'main', name: 'My workspace' },
+  // Illustrative workspace metrics from Stitch; independent of form records.
+  summary: { responses: 842, completionPercentage: 76, liveForms: 6 },
   accountLabel: 'Demo account',
   primaryNavigation: [
     { id: 'forms', label: 'Forms', current: true },

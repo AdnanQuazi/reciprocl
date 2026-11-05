@@ -2,8 +2,10 @@ import { ChartColumn, FileText, Globe, LockKeyhole, PanelsTopLeft, Plus, Users, 
 import reciproclLogo from '@/assets/reciprocl-logo.png';
 import AppShell from '@/components/layout/AppShell';
 import Sidebar from '@/components/layout/Sidebar';
+import MobileNavigation from '@/components/layout/MobileNavigation';
 import Header from '@/components/layout/Header';
 import PageContainer from '@/components/layout/PageContainer';
+import WorkspaceOverview from './components/WorkspaceOverview';
 
 const navigationIcons = { forms: FileText, contacts: Users, automations: Zap, insights: ChartColumn, pages: PanelsTopLeft };
 const groupIcons = { private: LockKeyhole, shared: Globe };
@@ -16,14 +18,21 @@ const headerActions = [
 export default function MainWorkspace({ data }) {
   const navigation = data.primaryNavigation.map(item => ({ ...item, icon: navigationIcons[item.id] }));
   const workspaceGroups = data.workspaceGroups.map(group => ({ ...group, icon: groupIcons[group.id] }));
+  const sidebarProps = { brand, accountLabel: data.accountLabel, navigation, workspaceGroups };
 
   return (
     <AppShell
-      sidebar={<Sidebar brand={brand} accountLabel={data.accountLabel} navigation={navigation} workspaceGroups={workspaceGroups} />}
-      header={<Header search={{ label: 'Search forms', placeholder: 'Search unavailable' }} actions={headerActions} />}
+      sidebar={<Sidebar {...sidebarProps} />}
+      header={
+        <Header
+          navigationTrigger={<MobileNavigation {...sidebarProps} />}
+          search={{ label: 'Search forms', placeholder: 'Search unavailable' }}
+          actions={headerActions}
+        />
+      }
     >
       <PageContainer>
-        <h1 className="text-2xl font-semibold tracking-tight">{data.workspace.name}</h1>
+        <WorkspaceOverview workspace={data.workspace} summary={data.summary} />
       </PageContainer>
     </AppShell>
   );
