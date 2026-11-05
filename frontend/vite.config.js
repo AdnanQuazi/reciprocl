@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -7,6 +8,11 @@ import proxyOptions from "./proxyOptions";
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
 	base: mode === "production" ? "/assets/reciprocl/frontend/" : "/",
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
+		},
+	},
 	plugins: [
 		react(),
 		tailwindcss(),

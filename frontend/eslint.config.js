@@ -18,4 +18,14 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    files: ['src/components/ui/button.jsx', 'src/components/ui/badge.jsx'],
+    rules: {
+      // Preserve shadcn's public CVA exports without relaxing other files.
+      'react-refresh/only-export-components': ['error', {
+        allowConstantExport: true,
+        allowExportNames: ['buttonVariants', 'badgeVariants'],
+      }],
+    },
+  },
 ])
