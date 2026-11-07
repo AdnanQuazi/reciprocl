@@ -18,6 +18,14 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground",
         navigation:
           "justify-start text-xs font-normal text-muted-foreground hover:bg-muted hover:text-foreground",
+        filter:
+          "border-b-2 border-transparent text-muted-foreground aria-pressed:border-foreground aria-pressed:font-semibold aria-pressed:text-foreground disabled:opacity-100",
+        view:
+          "text-muted-foreground aria-pressed:bg-muted aria-pressed:text-foreground aria-pressed:disabled:opacity-100",
+        page:
+          "text-muted-foreground hover:bg-muted aria-[current=page]:bg-primary aria-[current=page]:text-primary-foreground aria-[current=page]:disabled:opacity-100",
+        supporting:
+          "flex-col items-start justify-start border border-dashed border-border bg-card/50 text-left font-normal whitespace-normal text-card-foreground disabled:opacity-100",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -25,6 +33,10 @@ const buttonVariants = cva(
         xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
         compact: "h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5 md:h-auto md:px-3 md:py-1.5 md:text-xs md:has-[>svg]:px-3",
+        filter: "h-auto rounded-none px-0 pt-0 pb-2 text-xs",
+        page: "size-8 md:size-7 md:text-xs",
+        pagination: "h-8 gap-1 px-2.5 md:h-7 md:text-xs",
+        tile: "h-auto gap-3 rounded-lg p-5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
