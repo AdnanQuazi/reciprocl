@@ -15,11 +15,10 @@ export default function Header({ search, actions, navigationTrigger }) {
             id="workspace-search"
             type="search"
             placeholder={search.placeholder}
-            disabled
-            aria-describedby="search-unavailable"
+            value={search.value}
+            onChange={event => search.onValueChange(event.target.value)}
             className="h-8 pl-9"
           />
-          <span id="search-unavailable" className="sr-only">Search is unavailable.</span>
         </div>
       </div>
 
