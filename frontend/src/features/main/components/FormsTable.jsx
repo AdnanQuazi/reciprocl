@@ -8,8 +8,24 @@ import ResponseTrend from '@/features/main/components/ResponseTrend';
 
 const formIcons = { file: FileText, briefcase: BriefcaseBusiness, message: MessageCircle, calendar: CalendarDays, support: LifeBuoy, phone: Phone, mail: Mail };
 
-export default function FormsTable({ forms, workspaceName }) {
+export default function FormsTable({ forms, workspaceName, isSourceEmpty = false, onClearFilters }) {
   const scrollHintId = useId();
+
+  if (forms.length === 0) {
+    return (
+      <div className="space-y-4 border-b border-border bg-card px-4 py-8 text-card-foreground">
+        <div className="space-y-1">
+          <h2 className="text-base font-semibold">No forms found</h2>
+          <p className="text-sm text-muted-foreground">
+            {isSourceEmpty ? 'This workspace has no forms yet.' : 'Your current search or status filter has no matching forms.'}
+          </p>
+        </div>
+        {!isSourceEmpty && onClearFilters && (
+          <Button type="button" variant="outline" onClick={onClearFilters}>Clear filters</Button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -36,13 +52,7 @@ export default function FormsTable({ forms, workspaceName }) {
           </TableRow>
         </TableHeader>
         <TableBody variant="listing">
-          {forms.length === 0 ? (
-            <TableRow variant="listing">
-              <TableCell variant="listing" colSpan={5}>
-                <p className="py-6 text-sm text-muted-foreground">No forms match your search and status filter.</p>
-              </TableCell>
-            </TableRow>
-          ) : forms.map(form => {
+          {forms.map(form => {
             const Icon = formIcons[form.icon];
 
             return (
@@ -68,10 +78,10 @@ export default function FormsTable({ forms, workspaceName }) {
                   <ResponseTrend values={form.trend} />
                 </TableCell>
                 <TableCell variant="listing" className="text-right">
-                  {form.responses !== null ? (
+                  {Number.isFinite(form.responses) ? (
                     <>
                       <p className="text-sm font-semibold">{form.responses.toLocaleString('en-US')}</p>
-                      <p className="text-xs text-muted-foreground">{form.completionPercentage}% completed</p>
+                      <p className="text-xs text-muted-foreground">{Number.isFinite(form.completionPercentage) ? `${form.completionPercentage}% completed` : 'Completion unavailable'}</p>
                     </>
                   ) : <span className="text-xs text-muted-foreground"><span aria-hidden="true">—</span><span className="sr-only">No response data</span></span>}
                 </TableCell>

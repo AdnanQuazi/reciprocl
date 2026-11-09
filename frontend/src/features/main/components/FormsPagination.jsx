@@ -31,6 +31,7 @@ export default function FormsPagination({
       {disabled && <p id={noticeId} className="sr-only">Pagination controls are unavailable.</p>}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <p role="status" aria-atomic="true" className="text-xs text-muted-foreground">
+          {totalCount === 0 && <span className="sr-only">No forms found. </span>}
           Showing <strong className="font-semibold text-foreground">{range.start}–{range.end}</strong> of {totalCount} forms
         </p>
         <div className="flex items-center gap-1.5">

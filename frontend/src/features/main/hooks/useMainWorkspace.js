@@ -40,11 +40,18 @@ export default function useMainWorkspace(forms) {
     setCurrentPage(1);
   }
 
+  function onClearFilters() {
+    setSearchQuery('');
+    setStatusFilter('all');
+    setSortOrder('updated-desc');
+    setCurrentPage(1);
+  }
+
   return {
     statusFilter, onStatusChange,
     searchQuery, onSearchChange,
     sortOrder, onSortChange,
-    pageSize, pageSizeOptions, onPageChange, onPageSizeChange,
+    pageSize, pageSizeOptions, onPageChange, onPageSizeChange, onClearFilters,
     ...pagination,
   };
 }

@@ -2,7 +2,7 @@ import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function Header({ search, actions, navigationTrigger }) {
+export default function Header({ search, actions, navigationTrigger, searchInputRef }) {
   return (
     <header className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border bg-card px-4 py-2 text-card-foreground md:px-8">
       <div className="flex w-full min-w-0 items-center gap-3 md:w-auto">
@@ -11,6 +11,7 @@ export default function Header({ search, actions, navigationTrigger }) {
           <label htmlFor="workspace-search" className="sr-only">{search.label}</label>
           <Search aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-3 my-auto size-4 text-muted-foreground" />
           <Input
+            ref={searchInputRef}
             variant="search"
             id="workspace-search"
             type="search"

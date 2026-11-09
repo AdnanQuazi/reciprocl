@@ -212,3 +212,67 @@ test('The complete pipeline leaves expanded frozen fixtures and nested data unch
     }
   }
 });
+
+test('Combined browsing preserves complete expected results across every page size', () => {
+  const cases = [
+    { status: 'draft', query: ' NEW ', order: 'name-asc', ids: ['new-form', 'newsletter-signup'] },
+    { status: 'published', query: ' DEMO FORM ', order: 'responses-asc', ids: [3, 13, 7, 1, 9, 5, 15, 11].map(n => `demo-form-${String(n).padStart(2, '0')}`) },
+    { status: 'all', query: 'demo form', order: 'name-desc', ids: Array.from({ length: 16 }, (_, i) => `demo-form-${String(16 - i).padStart(2, '0')}`) },
+    { status: 'draft', query: 'demo', order: 'responses-desc', ids: Array.from({ length: 8 }, (_, i) => `demo-form-${String((i + 1) * 2).padStart(2, '0')}`) },
+  ];
+  for (const { status, query, order, ids } of cases) {
+    const matching = sortForms(searchFormsByName(filterFormsByStatus(mainWorkspaceMock.forms, status), query), order);
+    for (const size of [8, 16, 24]) {
+      const pages = Array.from({ length: Math.ceil(ids.length / size) }, (_, i) => paginateForms(matching, i + 1, size));
+      assert.deepEqual(pages.flatMap(page => page.visibleForms.map(form => form.id)), ids);
+      assert.ok(pages.every(page => page.totalCount === ids.length));
+    }
+  }
+});
+
+test('Empty sources and zero-match pipelines remain valid for all browsing controls', () => {
+  for (const source of [[], mainWorkspaceMock.forms]) {
+    for (const status of ['all', 'published', 'draft']) {
+      for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc']) {
+        const matching = sortForms(searchFormsByName(filterFormsByStatus(source, status), 'no matching form exists'), order);
+        for (const size of [8, 16, 24]) {
+          const result = paginateForms(matching, 3, size);
+          assert.deepEqual(result, { visibleForms: [], totalCount: 0, currentPage: 1, pageCount: 0, range: { start: 0, end: 0 } });
+        }
+      }
+    }
+  }
+  const published = filterFormsByStatus(mainWorkspaceMock.forms, 'published');
+  const result = paginateForms(sortForms(published), 3, 8);
+  assert.equal(result.currentPage, 2);
+  assert.deepEqual(result.range, { start: 9, end: 14 });
+  assert.equal(result.visibleForms.length, 6);
+});
+
+test('Missing metrics stay last across page boundaries with deterministic equal-value ordering', () => {
+  const forms = Object.freeze([
+    Object.freeze({ id: 'missing-b', responses: undefined }),
+    Object.freeze({ id: 'numeric-b', responses: 4 }),
+    Object.freeze({ id: 'missing-a', responses: null }),
+    Object.freeze({ id: 'zero', responses: 0 }),
+    Object.freeze({ id: 'numeric-a', responses: 4 }),
+    Object.freeze({ id: 'missing-c', responses: NaN }),
+  ]);
+  for (const [order, numericIds] of [
+    ['responses-asc', ['zero', 'numeric-a', 'numeric-b']],
+    ['responses-desc', ['numeric-a', 'numeric-b', 'zero']],
+  ]) {
+    const sorted = sortForms(forms, order);
+    assert.deepEqual(paginateForms(sorted, 1, 3).visibleForms.map(form => form.id), numericIds);
+    assert.deepEqual(paginateForms(sorted, 2, 3).visibleForms.map(form => form.id), ['missing-a', 'missing-b', 'missing-c']);
+    assert.equal(forms[0].id, 'missing-b');
+  }
+});
+
+test('Long form names remain intact through normalized search, sorting, and pagination', () => {
+  const name = `Demo ${'long form name '.repeat(40)}ending`;
+  const forms = Object.freeze([Object.freeze({ id: 'long-name', name })]);
+  const matching = sortForms(searchFormsByName(filterFormsByStatus(forms), '  FORM NAME  '), 'name-desc');
+  assert.equal(paginateForms(matching).visibleForms[0].name, name);
+  assert.equal(forms[0].name, name);
+});

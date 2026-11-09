@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { ChartColumn, FileText, Globe, LockKeyhole, PanelsTopLeft, Plus, Users, Zap } from 'lucide-react';
 import reciproclLogo from '@/assets/reciprocl-logo.png';
 import AppShell from '@/components/layout/AppShell';
@@ -24,11 +25,17 @@ export default function MainWorkspace({ data }) {
   const {
     statusFilter, onStatusChange, searchQuery, onSearchChange, sortOrder, onSortChange,
     visibleForms, range, totalCount, currentPage, pageCount,
-    pageSize, pageSizeOptions, onPageChange, onPageSizeChange,
+    pageSize, pageSizeOptions, onPageChange, onPageSizeChange, onClearFilters,
   } = useMainWorkspace(data.forms);
+  const searchInputRef = useRef(null);
   const navigation = data.primaryNavigation.map(item => ({ ...item, icon: navigationIcons[item.id] }));
   const workspaceGroups = data.workspaceGroups.map(group => ({ ...group, icon: groupIcons[group.id] }));
   const sidebarProps = { brand, accountLabel: data.accountLabel, navigation, workspaceGroups };
+
+  function handleClearFilters() {
+    onClearFilters();
+    searchInputRef.current?.focus();
+  }
 
   return (
     <AppShell
@@ -37,6 +44,7 @@ export default function MainWorkspace({ data }) {
         <Header
           navigationTrigger={<MobileNavigation {...sidebarProps} />}
           search={{ label: 'Search forms', placeholder: 'Search forms', value: searchQuery, onValueChange: onSearchChange }}
+          searchInputRef={searchInputRef}
           actions={headerActions}
         />
       }
@@ -46,7 +54,12 @@ export default function MainWorkspace({ data }) {
         <section aria-label="Forms" className="mt-6">
           <FormsToolbar statusFilter={statusFilter} onStatusChange={onStatusChange} sortOrder={sortOrder} onSortChange={onSortChange} />
           <div className="mt-2">
-            <FormsTable forms={visibleForms} workspaceName={data.workspace.name} />
+            <FormsTable
+              forms={visibleForms}
+              workspaceName={data.workspace.name}
+              isSourceEmpty={data.forms.length === 0}
+              onClearFilters={handleClearFilters}
+            />
           </div>
           <FormsPagination
             range={range}
