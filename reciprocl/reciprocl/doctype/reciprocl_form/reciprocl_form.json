@@ -1,0 +1,105 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:REC-{####}",
+ "creation": "2026-10-29 00:00:00.000000",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "form_title",
+  "form_key",
+  "status",
+  "target_doctype",
+  "section_break_schema",
+  "schema_json",
+  "settings_json",
+  "integration_json"
+ ],
+ "fields": [
+  {
+   "fieldname": "form_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Form Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "form_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Public URL Key",
+   "read_only": 1,
+   "description": "Short slug for the public share URL: /{form_key}"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nPublished\nClosed"
+  },
+  {
+   "fieldname": "target_doctype",
+   "fieldtype": "Data",
+   "label": "Target DocType",
+   "read_only": 1,
+   "description": "Auto-generated DocType storing this form's responses as real SQL columns."
+  },
+  {
+   "fieldname": "section_break_schema",
+   "fieldtype": "Section Break",
+   "label": "Schema & Settings"
+  },
+  {
+   "fieldname": "schema_json",
+   "fieldtype": "Code",
+   "label": "Schema JSON",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "settings_json",
+   "fieldtype": "Code",
+   "label": "Settings JSON",
+   "options": "JSON",
+   "description": "Success message, expiry date, etc."
+  },
+  {
+   "fieldname": "integration_json",
+   "fieldtype": "Code",
+   "label": "Integration JSON",
+   "options": "JSON",
+   "description": "Phase 3: field mappings to HR, CRM, ERPNext DocTypes."
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Reciprocl",
+ "name": "Reciprocl Form",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "form_title",
+ "track_changes": 0
+}
+
