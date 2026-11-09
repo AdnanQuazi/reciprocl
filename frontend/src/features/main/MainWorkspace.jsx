@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ChartColumn, FileText, Globe, LockKeyhole, PanelsTopLeft, Plus, Users, Zap } from 'lucide-react';
 import reciproclLogo from '@/assets/reciprocl-logo.png';
 import AppShell from '@/components/layout/AppShell';
@@ -28,6 +28,13 @@ export default function MainWorkspace({ data }) {
     pageSize, pageSizeOptions, onPageChange, onPageSizeChange, onClearFilters,
   } = useMainWorkspace(data.forms);
   const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = `${data.workspace.name} — Reciprocl`;
+    return () => { document.title = previousTitle; };
+  }, [data.workspace.name]);
+
   const navigation = data.primaryNavigation.map(item => ({ ...item, icon: navigationIcons[item.id] }));
   const workspaceGroups = data.workspaceGroups.map(group => ({ ...group, icon: groupIcons[group.id] }));
   const sidebarProps = { brand, accountLabel: data.accountLabel, navigation, workspaceGroups };
