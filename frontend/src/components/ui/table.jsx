@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 const rowVariants = cva(
   "border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted",

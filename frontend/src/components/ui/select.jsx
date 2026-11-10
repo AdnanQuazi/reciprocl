@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 
