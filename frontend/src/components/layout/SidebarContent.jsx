@@ -9,7 +9,7 @@ export default function SidebarContent({ brand, accountLabel, navigation, worksp
         <img src={brand.logo} alt="" className="size-8 rounded-md object-contain" />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{brand.name}</p>
-          <p className="truncate text-xs text-muted-foreground">{accountLabel}</p>
+          <p className="type-micro truncate text-muted-foreground">{accountLabel}</p>
         </div>
       </div>
 

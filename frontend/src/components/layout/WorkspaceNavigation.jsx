@@ -1,13 +1,14 @@
 import { useId } from 'react';
 import { ChevronRight, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function WorkspaceNavigation({ groups }) {
   const titleId = useId();
   return (
     <nav aria-labelledby={titleId} className="mt-8">
       <div className="flex items-center justify-between px-2">
-        <h2 id={titleId} className="text-xs font-medium text-muted-foreground">Workspaces</h2>
+        <h2 id={titleId} className="text-xs font-semibold text-muted-foreground">Workspaces</h2>
         <Button variant="ghost" size="icon-xs" disabled aria-label="Add workspace — unavailable" title="Add workspace — unavailable">
           <Plus aria-hidden="true" className="size-4" />
         </Button>
@@ -16,7 +17,10 @@ export default function WorkspaceNavigation({ groups }) {
       <div className="space-y-2">
         {groups.map(({ id, label, icon: Icon, workspaces }) => (
           <details key={id} open className="group">
-            <summary className="flex cursor-pointer list-none items-center gap-2 rounded-md px-2 py-2 text-xs text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring md:gap-1 md:py-1.5 [&::-webkit-details-marker]:hidden">
+            <summary className={cn(
+              'flex cursor-pointer list-none items-center gap-2 rounded-md px-2 py-2 text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring md:gap-1 md:py-1.5 [&::-webkit-details-marker]:hidden',
+              workspaces.some(workspace => workspace.current) ? 'font-medium text-foreground' : 'text-secondary-foreground',
+            )}>
               <Icon aria-hidden="true" className="size-4 shrink-0" />
               <span>{label}</span>
               <ChevronRight aria-hidden="true" className="ml-auto size-4 shrink-0 transition-transform group-open:rotate-90" />

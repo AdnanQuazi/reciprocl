@@ -11,7 +11,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: "",
-        search: "md:text-xs",
+        search: "h-full border-0 bg-transparent px-0 py-0 text-xs shadow-none placeholder:text-muted-foreground focus-visible:border-transparent focus-visible:ring-0 md:text-xs",
       },
     },
     defaultVariants: { variant: "default" },

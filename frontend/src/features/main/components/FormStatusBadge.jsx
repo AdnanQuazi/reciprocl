@@ -7,7 +7,7 @@ export default function FormStatusBadge({ status }) {
   return (
     <Badge variant={isLive ? 'success' : 'subtle'}>
       {isLive ? (
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-current" />
+        <span aria-hidden="true" className="size-1.5 rounded-full bg-success-indicator" />
       ) : (
         <Circle aria-hidden="true" />
       )}

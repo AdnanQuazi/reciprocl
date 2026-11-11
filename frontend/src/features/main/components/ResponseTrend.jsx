@@ -24,8 +24,17 @@ export default function ResponseTrend({ values }) {
       ? height / 2
       : height - padding - ((value - lowerBound) / range) * (height - padding * 2);
 
-    return `${x},${y}`;
-  }).join(' ');
+    return { x, y };
+  });
+  const midpoints = points.slice(1).map((point, index) => ({
+    x: (points[index].x + point.x) / 2,
+    y: (points[index].y + point.y) / 2,
+  }));
+  const path = [
+    `M ${points[0].x} ${points[0].y}`,
+    ...midpoints.map((point, index) => `Q ${points[index].x} ${points[index].y} ${point.x} ${point.y}`),
+    `Q ${points.at(-1).x} ${points.at(-1).y} ${points.at(-1).x} ${points.at(-1).y}`,
+  ].join(' ');
 
   return (
     <svg
@@ -34,7 +43,7 @@ export default function ResponseTrend({ values }) {
       viewBox={`0 0 ${width} ${height}`}
       className="h-6 w-24 shrink-0 text-chart-1"
     >
-      <polyline points={points} fill="none" stroke="currentColor" className="stroke-2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={path} fill="none" stroke="currentColor" className="stroke-2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

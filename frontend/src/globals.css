@@ -1,71 +1,93 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Provisional neutral theme; project-specific roles are added when needed. */
+@font-face {
+  font-family: Inter;
+  src: url("./assets/Inter-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+/* The light values follow the original Main Workspace Stitch export. */
 :root {
   color-scheme: light;
-  --background: oklch(0.985 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.45 0 0);
-  --accent: oklch(0.95 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #fbfbfb;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #262626;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #404040;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --tertiary-foreground: #a3a3a3;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
   --destructive: oklch(0.5 0.2 25);
   --destructive-foreground: oklch(0.985 0 0);
-  --success: oklch(0.96 0.035 165);
-  --success-foreground: oklch(0.4 0.09 165);
-  --integration: oklch(0.205 0 0);
-  --integration-foreground: oklch(0.985 0 0);
-  --chart-1: oklch(0.55 0 0);
+  --success: #ecfdf5;
+  --success-foreground: #047857;
+  --success-indicator: #10b981;
+  --info: #eff6ff;
+  --info-foreground: #1d4ed8;
+  --form-icon: #2e4d3a;
+  --form-icon-foreground: #a7f3d0;
+  --integration: #191919;
+  --integration-foreground: #ffffff;
+  --chart-1: #a3a3a3;
   --chart-1-foreground: var(--card);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.65 0 0);
-  --ring: oklch(0.45 0 0);
+  --border: #eaeaea;
+  --input: #e5e5e5;
+  --ring: #737373;
   --overlay: oklch(0 0 0 / 50%);
   --overlay-foreground: oklch(0.985 0 0);
-  --radius: 0.625rem;
-  --font-body: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+  --radius: 0.5rem;
+  --font-body: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --shadow-xs: 0 1px 2px oklch(0 0 0 / 5%);
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 10%), 0 1px 2px oklch(0 0 0 / 10%);
+  --type-micro-size: 0.6875rem;
+  --type-micro-line-height: 1rem;
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
   --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 10%),
     0 4px 6px -4px oklch(0 0 0 / 10%);
 }
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.3 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #141414;
+  --foreground: #f5f5f5;
+  --card: #202020;
+  --card-foreground: #f5f5f5;
+  --popover: #262626;
+  --popover-foreground: #f5f5f5;
+  --primary: #f5f5f5;
+  --primary-foreground: #171717;
+  --secondary: #2b2b2b;
+  --secondary-foreground: #e5e5e5;
+  --muted: #303030;
+  --muted-foreground: #b3b3b3;
+  --tertiary-foreground: #a3a3a3;
+  --accent: #383838;
+  --accent-foreground: #f5f5f5;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: oklch(0.145 0 0);
-  --success: oklch(0.28 0.045 165);
-  --success-foreground: oklch(0.85 0.1 165);
-  --integration: oklch(0.35 0 0);
-  --integration-foreground: oklch(0.985 0 0);
-  --chart-1: oklch(0.708 0 0);
+  --success: #12372b;
+  --success-foreground: #a7f3d0;
+  --success-indicator: #34d399;
+  --info: #1c2e4d;
+  --info-foreground: #bfdbfe;
+  --form-icon: #315843;
+  --form-icon-foreground: #d1fae5;
+  --integration: #393939;
+  --integration-foreground: #ffffff;
+  --chart-1: #b3b3b3;
   --chart-1-foreground: var(--card);
-  --border: oklch(0.35 0 0);
-  --input: oklch(0.6 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #404040;
+  --input: #525252;
+  --ring: #a3a3a3;
   --overlay: oklch(0 0 0 / 70%);
   --overlay-foreground: oklch(0.985 0 0);
 }
@@ -83,12 +105,18 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-indicator: var(--success-indicator);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-form-icon: var(--form-icon);
+  --color-form-icon-foreground: var(--form-icon-foreground);
   --color-integration: var(--integration);
   --color-integration-foreground: var(--integration-foreground);
   --color-chart-1: var(--chart-1);
@@ -104,6 +132,13 @@
   --font-sans: var(--font-body);
 }
 
+@layer utilities {
+  .type-micro {
+    font-size: var(--type-micro-size);
+    line-height: var(--type-micro-line-height);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -111,5 +146,7 @@
 
   body {
     @apply bg-background font-sans text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
   }
 }

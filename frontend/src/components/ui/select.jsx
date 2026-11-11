@@ -9,7 +9,7 @@ const triggerVariants = cva(
     variants: {
       variant: {
         default: "",
-        toolbar: "border-transparent bg-transparent px-0 font-medium text-muted-foreground shadow-none",
+        toolbar: "border-transparent bg-transparent px-0 font-medium text-secondary-foreground shadow-none",
       },
       size: {
         default: "h-9",

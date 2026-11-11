@@ -17,7 +17,7 @@ export default function IntegrationIndicators({ integrations = [] }) {
 
   if (items.length === 0) {
     return (
-      <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-border text-muted-foreground">
+      <span className="flex size-6 items-center justify-center rounded-full border border-dashed border-border text-tertiary-foreground">
         <Plus aria-hidden="true" className="size-3" />
         <span className="sr-only">No integrations</span>
       </span>
@@ -36,7 +36,7 @@ export default function IntegrationIndicators({ integrations = [] }) {
           const Icon = integrationIcons[item.icon] ?? Plug;
 
           return (
-            <span key={item.id} title={item.name} className={cn('relative flex size-6 shrink-0 items-center justify-center rounded-full border border-card bg-integration text-integration-foreground', stackingOrder[index])}>
+            <span key={item.id} title={item.name} className={cn('relative flex size-6 shrink-0 items-center justify-center rounded-full border border-card bg-integration text-integration-foreground shadow-xs', stackingOrder[index])}>
               <Icon className="size-3.5" />
             </span>
           );

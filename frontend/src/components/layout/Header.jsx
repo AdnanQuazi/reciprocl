@@ -7,9 +7,9 @@ export default function Header({ search, actions, navigationTrigger, searchInput
     <header className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border bg-card px-4 py-2 text-card-foreground md:px-8">
       <div className="flex w-full min-w-0 items-center gap-3 md:w-auto">
         {navigationTrigger}
-        <div className="relative min-w-0 flex-1 md:w-64 md:flex-none">
+        <div className="flex h-9 min-w-0 flex-1 items-center gap-2 rounded-lg border border-input bg-muted px-2.5 focus-within:border-ring focus-within:ring-1 focus-within:ring-ring md:w-64 md:flex-none">
           <label htmlFor="workspace-search" className="sr-only">{search.label}</label>
-          <Search aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-3 my-auto size-4 text-muted-foreground" />
+          <Search aria-hidden="true" className="pointer-events-none size-4 shrink-0 text-tertiary-foreground" />
           <Input
             ref={searchInputRef}
             variant="search"
@@ -18,7 +18,7 @@ export default function Header({ search, actions, navigationTrigger, searchInput
             placeholder={search.placeholder}
             value={search.value}
             onChange={event => search.onValueChange(event.target.value)}
-            className="h-8 pl-9"
+            className="min-w-0 flex-1"
           />
         </div>
       </div>

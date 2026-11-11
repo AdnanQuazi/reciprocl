@@ -8,12 +8,12 @@ export default function WorkspaceOverview({ workspace, summary }) {
         <h1 id="workspace-title" className="text-2xl font-bold tracking-tight break-words">{workspace.name}</h1>
         <ul aria-label="Workspace summary" className="mt-2 flex flex-col gap-2 text-xs font-medium text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
           <li><strong className="font-semibold text-foreground">{summary.responses.toLocaleString('en-US')}</strong> responses</li>
+          <li aria-hidden="true" className="hidden sm:block">•</li>
           <li>
-            <span aria-hidden="true" className="mr-6 hidden sm:inline">•</span>
             <strong className="font-semibold text-foreground">{summary.completionPercentage}%</strong> completion
           </li>
+          <li aria-hidden="true" className="hidden sm:block">•</li>
           <li>
-            <span aria-hidden="true" className="mr-6 hidden sm:inline">•</span>
             <strong className="font-semibold text-foreground">{summary.liveForms}</strong> live forms
           </li>
         </ul>

@@ -10,12 +10,12 @@ const statusFilters = [
 ];
 
 const sortOptions = [
-  { value: 'updated-desc', label: 'Last updated, newest first' },
-  { value: 'updated-asc', label: 'Last updated, oldest first' },
-  { value: 'name-asc', label: 'Form name, A–Z' },
-  { value: 'name-desc', label: 'Form name, Z–A' },
-  { value: 'responses-desc', label: 'Response count, highest first' },
-  { value: 'responses-asc', label: 'Response count, lowest first' },
+  { value: 'updated-desc', label: 'Last updated, newest first', shortLabel: 'Last updated' },
+  { value: 'updated-asc', label: 'Last updated, oldest first', shortLabel: 'Oldest first' },
+  { value: 'name-asc', label: 'Form name, A–Z', shortLabel: 'Name A–Z' },
+  { value: 'name-desc', label: 'Form name, Z–A', shortLabel: 'Name Z–A' },
+  { value: 'responses-desc', label: 'Response count, highest first', shortLabel: 'Most responses' },
+  { value: 'responses-asc', label: 'Response count, lowest first', shortLabel: 'Fewest responses' },
 ];
 
 export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, onSortChange }) {
@@ -43,7 +43,7 @@ export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, 
       <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-3">
         <Select value={sortOrder} onValueChange={onSortChange}>
           <SelectTrigger variant="toolbar" size="compact" className="max-w-full" aria-label="Sort forms">
-            <SelectValue />
+            <SelectValue>{sortOptions.find(option => option.value === sortOrder)?.shortLabel}</SelectValue>
           </SelectTrigger>
           <SelectContent position="popper" align="end">
             {sortOptions.map(({ value, label }) => <SelectItem key={value} value={value}>{label}</SelectItem>)}

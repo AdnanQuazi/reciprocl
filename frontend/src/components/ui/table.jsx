@@ -8,7 +8,7 @@ const rowVariants = cva(
 
 const headVariants = cva(
   "h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-  { variants: { variant: { default: "", listing: "h-8 px-4 text-xs text-muted-foreground" } }, defaultVariants: { variant: "default" } }
+  { variants: { variant: { default: "", listing: "type-micro h-8 px-4 font-medium text-muted-foreground" } }, defaultVariants: { variant: "default" } }
 )
 
 const cellVariants = cva(

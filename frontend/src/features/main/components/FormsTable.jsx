@@ -1,5 +1,6 @@
 import { useId } from 'react';
-import { BriefcaseBusiness, CalendarDays, FileText, LifeBuoy, Mail, MessageCircle, MoreHorizontal, Phone } from 'lucide-react';
+import { BriefcaseBusiness, Building2, CalendarDays, ContactRound, FileText, LifeBuoy, Link2, Mail, MessageCircle, MoreHorizontal, Phone, Ticket, UserRound } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import FormStatusBadge from '@/features/main/components/FormStatusBadge';
@@ -7,6 +8,7 @@ import IntegrationIndicators from '@/features/main/components/IntegrationIndicat
 import ResponseTrend from '@/features/main/components/ResponseTrend';
 
 const formIcons = { file: FileText, briefcase: BriefcaseBusiness, message: MessageCircle, calendar: CalendarDays, support: LifeBuoy, phone: Phone, mail: Mail };
+const connectionIcons = { 'CRM Lead': UserRound, 'Job Applicant': BriefcaseBusiness, Customer: Building2, 'CRM Contact': ContactRound, Ticket };
 
 export default function FormsTable({ forms, workspaceName, isSourceEmpty = false, onClearFilters }) {
   const scrollHintId = useId();
@@ -53,13 +55,14 @@ export default function FormsTable({ forms, workspaceName, isSourceEmpty = false
         </TableHeader>
         <TableBody variant="listing">
           {forms.map(form => {
-            const Icon = formIcons[form.icon];
+            const Icon = formIcons[form.icon] ?? FileText;
+            const ConnectionIcon = connectionIcons[form.connection] ?? Link2;
 
             return (
               <TableRow key={form.id} variant="listing">
                 <TableCell variant="listing">
                   <div className="flex items-center gap-3.5">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-form-icon text-form-icon-foreground shadow-xs">
                       <Icon aria-hidden="true" className="size-5" />
                     </div>
                     <div className="min-w-0">
@@ -67,7 +70,12 @@ export default function FormsTable({ forms, workspaceName, isSourceEmpty = false
                         <p className="text-sm font-semibold">{form.name}</p>
                         <FormStatusBadge status={form.status} />
                       </div>
-                      <p className="mt-1 text-xs leading-normal text-muted-foreground">{form.connection ?? 'Not connected'} · {form.sharing}</p>
+                      <div className="mt-1 flex items-center gap-2 text-xs">
+                        {form.connection ? (
+                          <Badge variant="info"><ConnectionIcon aria-hidden="true" />{form.connection}</Badge>
+                        ) : <span className="text-muted-foreground">Not connected</span>}
+                        <span className="text-muted-foreground">{form.sharing}</span>
+                      </div>
                     </div>
                   </div>
                 </TableCell>
@@ -81,7 +89,7 @@ export default function FormsTable({ forms, workspaceName, isSourceEmpty = false
                   {Number.isFinite(form.responses) ? (
                     <>
                       <p className="text-sm font-semibold">{form.responses.toLocaleString('en-US')}</p>
-                      <p className="text-xs text-muted-foreground">{Number.isFinite(form.completionPercentage) ? `${form.completionPercentage}% completed` : 'Completion unavailable'}</p>
+                      <p className="type-micro text-muted-foreground">{Number.isFinite(form.completionPercentage) ? `${form.completionPercentage}% completed` : 'Completion unavailable'}</p>
                     </>
                   ) : <span className="text-xs text-muted-foreground"><span aria-hidden="true">—</span><span className="sr-only">No response data</span></span>}
                 </TableCell>
