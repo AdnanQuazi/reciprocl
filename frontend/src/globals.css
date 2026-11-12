@@ -31,6 +31,9 @@
   --success: #ecfdf5;
   --success-foreground: #047857;
   --success-indicator: #10b981;
+  /* Provisional: warning and additional chart roles are not specified by Stitch. */
+  --warning: #fffbeb;
+  --warning-foreground: #92400e;
   --info: #eff6ff;
   --info-foreground: #1d4ed8;
   --form-icon: #2e4d3a;
@@ -39,6 +42,14 @@
   --integration-foreground: #ffffff;
   --chart-1: #a3a3a3;
   --chart-1-foreground: var(--card);
+  --chart-2: #047857;
+  --chart-2-foreground: var(--card);
+  --chart-3: #1d4ed8;
+  --chart-3-foreground: var(--card);
+  --chart-4: #a16207;
+  --chart-4-foreground: var(--card);
+  --chart-5: #7c3aed;
+  --chart-5-foreground: var(--card);
   --border: #eaeaea;
   --input: #e5e5e5;
   --ring: #737373;
@@ -77,6 +88,8 @@
   --success: #12372b;
   --success-foreground: #a7f3d0;
   --success-indicator: #34d399;
+  --warning: #451a03;
+  --warning-foreground: #fcd34d;
   --info: #1c2e4d;
   --info-foreground: #bfdbfe;
   --form-icon: #315843;
@@ -85,6 +98,14 @@
   --integration-foreground: #ffffff;
   --chart-1: #b3b3b3;
   --chart-1-foreground: var(--card);
+  --chart-2: #34d399;
+  --chart-2-foreground: var(--card);
+  --chart-3: #93c5fd;
+  --chart-3-foreground: var(--card);
+  --chart-4: #fbbf24;
+  --chart-4-foreground: var(--card);
+  --chart-5: #c4b5fd;
+  --chart-5-foreground: var(--card);
   --border: #404040;
   --input: #525252;
   --ring: #a3a3a3;
@@ -113,6 +134,8 @@
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-success-indicator: var(--success-indicator);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
   --color-form-icon: var(--form-icon);
@@ -121,6 +144,14 @@
   --color-integration-foreground: var(--integration-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-1-foreground: var(--chart-1-foreground);
+  --color-chart-2: var(--chart-2);
+  --color-chart-2-foreground: var(--chart-2-foreground);
+  --color-chart-3: var(--chart-3);
+  --color-chart-3-foreground: var(--chart-3-foreground);
+  --color-chart-4: var(--chart-4);
+  --color-chart-4-foreground: var(--chart-4-foreground);
+  --color-chart-5: var(--chart-5);
+  --color-chart-5-foreground: var(--chart-5-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
