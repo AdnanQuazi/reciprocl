@@ -1,0 +1,183 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: Inter;
+  src: url("./assets/Inter-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+/* The light values follow the original Main Workspace Stitch export. */
+:root {
+  color-scheme: light;
+  --background: #fbfbfb;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #262626;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #404040;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --tertiary-foreground: #a3a3a3;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: oklch(0.5 0.2 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --success: #ecfdf5;
+  --success-foreground: #047857;
+  --success-indicator: #10b981;
+  /* Provisional: warning and additional chart roles are not specified by Stitch. */
+  --warning: #fffbeb;
+  --warning-foreground: #92400e;
+  --info: #eff6ff;
+  --info-foreground: #1d4ed8;
+  --form-icon: #2e4d3a;
+  --form-icon-foreground: #a7f3d0;
+  --integration: #191919;
+  --integration-foreground: #ffffff;
+  --chart-1: #a3a3a3;
+  --chart-1-foreground: var(--card);
+  --chart-2: #047857;
+  --chart-2-foreground: var(--card);
+  --chart-3: #1d4ed8;
+  --chart-3-foreground: var(--card);
+  --chart-4: #a16207;
+  --chart-4-foreground: var(--card);
+  --chart-5: #7c3aed;
+  --chart-5-foreground: var(--card);
+  --border: #eaeaea;
+  --input: #e5e5e5;
+  --ring: #737373;
+  --overlay: oklch(0 0 0 / 50%);
+  --overlay-foreground: oklch(0.985 0 0);
+  --radius: 0.5rem;
+  --font-body: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --type-micro-size: 0.6875rem;
+  --type-micro-line-height: 1rem;
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 10%),
+    0 4px 6px -4px oklch(0 0 0 / 10%);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #141414;
+  --foreground: #f5f5f5;
+  --card: #202020;
+  --card-foreground: #f5f5f5;
+  --popover: #262626;
+  --popover-foreground: #f5f5f5;
+  --primary: #f5f5f5;
+  --primary-foreground: #171717;
+  --secondary: #2b2b2b;
+  --secondary-foreground: #e5e5e5;
+  --muted: #303030;
+  --muted-foreground: #b3b3b3;
+  --tertiary-foreground: #a3a3a3;
+  --accent: #383838;
+  --accent-foreground: #f5f5f5;
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.145 0 0);
+  --success: #12372b;
+  --success-foreground: #a7f3d0;
+  --success-indicator: #34d399;
+  --warning: #451a03;
+  --warning-foreground: #fcd34d;
+  --info: #1c2e4d;
+  --info-foreground: #bfdbfe;
+  --form-icon: #315843;
+  --form-icon-foreground: #d1fae5;
+  --integration: #393939;
+  --integration-foreground: #ffffff;
+  --chart-1: #b3b3b3;
+  --chart-1-foreground: var(--card);
+  --chart-2: #34d399;
+  --chart-2-foreground: var(--card);
+  --chart-3: #93c5fd;
+  --chart-3-foreground: var(--card);
+  --chart-4: #fbbf24;
+  --chart-4-foreground: var(--card);
+  --chart-5: #c4b5fd;
+  --chart-5-foreground: var(--card);
+  --border: #404040;
+  --input: #525252;
+  --ring: #a3a3a3;
+  --overlay: oklch(0 0 0 / 70%);
+  --overlay-foreground: oklch(0.985 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-indicator: var(--success-indicator);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-form-icon: var(--form-icon);
+  --color-form-icon-foreground: var(--form-icon-foreground);
+  --color-integration: var(--integration);
+  --color-integration-foreground: var(--integration-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-1-foreground: var(--chart-1-foreground);
+  --color-chart-2: var(--chart-2);
+  --color-chart-2-foreground: var(--chart-2-foreground);
+  --color-chart-3: var(--chart-3);
+  --color-chart-3-foreground: var(--chart-3-foreground);
+  --color-chart-4: var(--chart-4);
+  --color-chart-4-foreground: var(--chart-4-foreground);
+  --color-chart-5: var(--chart-5);
+  --color-chart-5-foreground: var(--chart-5-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-overlay: var(--overlay);
+  --color-overlay-foreground: var(--overlay-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --font-sans: var(--font-body);
+}
+
+@layer utilities {
+  .type-micro {
+    font-size: var(--type-micro-size);
+    line-height: var(--type-micro-line-height);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+}

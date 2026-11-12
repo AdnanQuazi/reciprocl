@@ -1,11 +1,7 @@
-/**
- * Dashboard -- placeholder page.
- * Replace this with real content as features are built out.
- */
+import MainWorkspace from '@/features/main/MainWorkspace';
+import { mainWorkspaceMock } from '@/features/main/mocks/mainWorkspace.mock';
+
+// The route retains authentication; workspace data is mocked until integration.
 export default function Dashboard() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
-    </div>
-  );
+  return <MainWorkspace data={mainWorkspaceMock} />;
 }
