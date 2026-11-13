@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 
 export interface SidebarProps {
-  brand: { name: string; logo: string };
+  brand: { name: string; monogram: string };
   accountLabel: string;
   navigation: readonly {
     id: string;

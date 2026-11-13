@@ -9,7 +9,9 @@ export default function SidebarContent({
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col bg-card text-card-foreground">
       <div className={cn('flex h-14 shrink-0 items-center gap-3 border-b border-border px-4', mobile && 'pr-12')}>
-        <img src={brand.logo} alt="" className="size-8 rounded-md object-contain" />
+        <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-mark text-sm font-semibold text-brand-mark-foreground shadow-sm">
+          {brand.monogram}
+        </span>
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{brand.name}</p>
           <p className="type-micro truncate text-muted-foreground">{accountLabel}</p>

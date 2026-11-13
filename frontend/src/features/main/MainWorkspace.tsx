@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ChartColumn, FileText, Globe, LockKeyhole, PanelsTopLeft, Plus, Users, Zap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import reciproclLogo from '@/assets/reciprocl-logo.png';
 import AppShell from '@/components/layout/AppShell';
 import Sidebar from '@/components/layout/Sidebar';
 import MobileNavigation from '@/components/layout/MobileNavigation';
@@ -17,7 +16,7 @@ import type { MainWorkspaceData, PrimaryNavigationId, WorkspaceGroupId } from '.
 
 const navigationIcons: Record<PrimaryNavigationId, LucideIcon> = { forms: FileText, contacts: Users, automations: Zap, insights: ChartColumn, pages: PanelsTopLeft };
 const groupIcons: Record<WorkspaceGroupId, LucideIcon> = { private: LockKeyhole, shared: Globe };
-const brand = { name: 'Reciprocl', logo: reciproclLogo };
+const brand = { name: 'Tuple', monogram: 'T' };
 const headerActions = [
   { id: 'brandKit', label: 'Brand kit', variant: 'ghost', icon: Globe },
   { id: 'createForm', label: 'Create form', variant: 'default', icon: Plus },
@@ -33,7 +32,7 @@ export default function MainWorkspace({ data }: { data: MainWorkspaceData }) {
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = `${data.workspace.name} — Reciprocl`;
+    document.title = `${data.workspace.name} — ${brand.name}`;
     return () => { document.title = previousTitle; };
   }, [data.workspace.name]);
 
