@@ -1,5 +1,7 @@
 // Local display fixtures, not a Frappe data contract.
 // Generic integration categories illustrate the reference icons, not real connections.
+import type { Integration, MainWorkspaceData } from '../types.ts';
+
 const integrationMocks = {
   messaging: { id: 'messaging', name: 'Messaging', icon: 'message' },
   database: { id: 'database', name: 'Database', icon: 'database' },
@@ -7,9 +9,9 @@ const integrationMocks = {
   email: { id: 'email', name: 'Email', icon: 'mail' },
   spreadsheet: { id: 'spreadsheet', name: 'Spreadsheet', icon: 'spreadsheet' },
   automation: { id: 'automation', name: 'Automation', icon: 'automation' },
-};
+} satisfies Record<string, Integration>;
 
-export const mainWorkspaceMock = {
+export const mainWorkspaceMock: MainWorkspaceData = {
   workspace: { id: 'main', name: 'My workspace' },
   // Illustrative workspace metrics from Stitch; independent of form records.
   summary: { responses: 842, completionPercentage: 76, liveForms: 6 },

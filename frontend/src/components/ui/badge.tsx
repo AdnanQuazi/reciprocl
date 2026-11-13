@@ -1,4 +1,6 @@
 import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils"
 import { Slot } from "radix-ui"
 
@@ -32,7 +34,10 @@ function Badge({
   variant = "default",
   asChild = false,
   ...props
-}) {
+}: ComponentProps<"span"> &
+  VariantProps<typeof badgeVariants> & {
+    asChild?: boolean;
+  }) {
   const Comp = asChild ? Slot.Root : "span"
 
   return (

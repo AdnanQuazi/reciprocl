@@ -1,4 +1,6 @@
 import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils"
 
 const rowVariants = cva(
@@ -25,7 +27,7 @@ function Table({
   className,
   containerProps,
   ...props
-}) {
+}: ComponentProps<"table"> & { containerProps?: ComponentProps<"div"> }) {
   return (
     <div
       data-slot="table-container"
@@ -44,7 +46,7 @@ function Table({
 function TableHeader({
   className,
   ...props
-}) {
+}: ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
@@ -58,7 +60,7 @@ function TableBody({
   className,
   variant = "default",
   ...props
-}) {
+}: ComponentProps<"tbody"> & VariantProps<typeof bodyVariants>) {
   return (
     <tbody
       data-slot="table-body"
@@ -71,7 +73,7 @@ function TableBody({
 function TableFooter({
   className,
   ...props
-}) {
+}: ComponentProps<"tfoot">) {
   return (
     <tfoot
       data-slot="table-footer"
@@ -88,7 +90,7 @@ function TableRow({
   className,
   variant = "default",
   ...props
-}) {
+}: ComponentProps<"tr"> & VariantProps<typeof rowVariants>) {
   return (
     <tr
       data-slot="table-row"
@@ -105,7 +107,7 @@ function TableHead({
   className,
   variant = "default",
   ...props
-}) {
+}: ComponentProps<"th"> & VariantProps<typeof headVariants>) {
   return (
     <th
       data-slot="table-head"
@@ -122,7 +124,7 @@ function TableCell({
   className,
   variant = "default",
   ...props
-}) {
+}: ComponentProps<"td"> & VariantProps<typeof cellVariants>) {
   return (
     <td
       data-slot="table-cell"
@@ -138,7 +140,7 @@ function TableCell({
 function TableCaption({
   className,
   ...props
-}) {
+}: ComponentProps<"caption">) {
   return (
     <caption
       data-slot="table-caption"

@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import type { PropsWithChildren } from 'react';
 import { ThemeContext } from './theme-context';
 import { isThemePreference, readThemePreference, resolveTheme, saveThemePreference } from './theme';
+import type { ThemePreference } from './theme';
 
 const systemThemeQuery = '(prefers-color-scheme: dark)';
 
-function systemIsDark() {
+function systemIsDark(): boolean {
   return typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
     window.matchMedia(systemThemeQuery).matches;
 }
 
-export default function ThemeProvider({ children }) {
+export default function ThemeProvider({ children }: PropsWithChildren) {
   const [preference, setPreference] = useState(readThemePreference);
   const [systemDark, setSystemDark] = useState(systemIsDark);
   const resolvedTheme = resolveTheme(preference, systemDark);
@@ -19,7 +21,7 @@ export default function ThemeProvider({ children }) {
     if (typeof window.matchMedia !== 'function') return undefined;
 
     const media = window.matchMedia(systemThemeQuery);
-    const onSystemChange = event => setSystemDark(event.matches);
+    const onSystemChange = (event: MediaQueryListEvent) => setSystemDark(event.matches);
     media.addEventListener('change', onSystemChange);
     return () => media.removeEventListener('change', onSystemChange);
   }, []);
@@ -28,7 +30,7 @@ export default function ThemeProvider({ children }) {
     document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
   }, [resolvedTheme]);
 
-  const setThemePreference = useCallback(nextPreference => {
+  const setThemePreference = useCallback((nextPreference: ThemePreference) => {
     if (!isThemePreference(nextPreference)) {
       throw new TypeError(`Invalid theme preference: ${nextPreference}`);
     }

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { mainWorkspaceMock } from '../mocks/mainWorkspace.mock.js';
-import { filterFormsByStatus, paginateForms, searchFormsByName, sortForms } from './formSelectors.js';
+import { mainWorkspaceMock } from '../mocks/mainWorkspace.mock.ts';
+import { filterFormsByStatus, paginateForms, searchFormsByName, sortForms } from './formSelectors.ts';
 
 const referenceForms = mainWorkspaceMock.forms.slice(0, 8);
 
@@ -23,7 +23,7 @@ test('Drafts selects only the two draft forms', () => {
 });
 
 test('Empty input and a status with no matching records return empty lists', () => {
-  for (const status of ['all', 'published', 'draft']) {
+  for (const status of ['all', 'published', 'draft'] as const) {
     assert.deepEqual(filterFormsByStatus([], status), []);
   }
   assert.deepEqual(filterFormsByStatus(referenceForms.slice(0, 6), 'draft'), []);
@@ -33,7 +33,7 @@ test('Empty input and a status with no matching records return empty lists', () 
 test('Repeated filtering leaves frozen input records, their order, and nested data unchanged', () => {
   const forms = structuredClone(referenceForms);
   const original = structuredClone(forms);
-  const freeze = value => {
+  const freeze = (value: unknown): void => {
     if (value && typeof value === 'object') {
       Object.values(value).forEach(freeze);
       Object.freeze(value);
@@ -41,7 +41,7 @@ test('Repeated filtering leaves frozen input records, their order, and nested da
   };
   freeze(forms);
 
-  for (const status of ['published', 'draft', 'all', 'draft', 'published']) {
+  for (const status of ['published', 'draft', 'all', 'draft', 'published'] as const) {
     const result = filterFormsByStatus(forms, status);
     assert.deepEqual(forms, original);
     assert.ok(result.every(form => forms.includes(form)));
@@ -86,7 +86,7 @@ test('Response sorts keep missing counts after numeric counts in either directio
 
 test('Equal values use ID ascending as a tie-breaker in every sort direction', () => {
   const forms = ['z', 'a', 'm'].map(id => ({ id, name: 'Same name', updatedAt: '2026-01-01T12:00:00.000Z', responses: 8 }));
-  for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc']) {
+  for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc'] as const) {
     assert.deepEqual(sortForms(forms, order).map(form => form.id), ['a', 'm', 'z']);
     assert.deepEqual(sortForms([], order), []);
   }
@@ -97,14 +97,14 @@ test('Equal values use ID ascending as a tie-breaker in every sort direction', (
 test('Status, name search, and sorting compose without changing deeply frozen fixtures', () => {
   const forms = structuredClone(referenceForms);
   const original = structuredClone(forms);
-  const freeze = value => {
+  const freeze = (value: unknown): void => {
     if (value && typeof value === 'object') {
       Object.values(value).forEach(freeze);
       Object.freeze(value);
     }
   };
   freeze(forms);
-  for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc']) {
+  for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc'] as const) {
     sortForms(forms, order);
     const result = sortForms(searchFormsByName(filterFormsByStatus(forms, 'draft'), ' NEW '), order);
     assert.equal(result.length, 2);
@@ -193,15 +193,15 @@ test('Status, search, and sorting run before slicing and retain matching totals'
 test('The complete pipeline leaves expanded frozen fixtures and nested data unchanged', () => {
   const forms = structuredClone(mainWorkspaceMock.forms);
   const original = structuredClone(forms);
-  function freeze(value) {
+  function freeze(value: unknown): void {
     if (value && typeof value === 'object') {
       Object.values(value).forEach(freeze);
       Object.freeze(value);
     }
   }
   freeze(forms);
-  for (const status of ['all', 'published', 'draft']) {
-    for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc']) {
+  for (const status of ['all', 'published', 'draft'] as const) {
+    for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc'] as const) {
       const matching = sortForms(searchFormsByName(filterFormsByStatus(forms, status), 'form'), order);
       for (const size of [8, 16, 24]) {
         const result = paginateForms(matching, 99, size);
@@ -219,7 +219,7 @@ test('Combined browsing preserves complete expected results across every page si
     { status: 'published', query: ' DEMO FORM ', order: 'responses-asc', ids: [3, 13, 7, 1, 9, 5, 15, 11].map(n => `demo-form-${String(n).padStart(2, '0')}`) },
     { status: 'all', query: 'demo form', order: 'name-desc', ids: Array.from({ length: 16 }, (_, i) => `demo-form-${String(16 - i).padStart(2, '0')}`) },
     { status: 'draft', query: 'demo', order: 'responses-desc', ids: Array.from({ length: 8 }, (_, i) => `demo-form-${String((i + 1) * 2).padStart(2, '0')}`) },
-  ];
+  ] as const;
   for (const { status, query, order, ids } of cases) {
     const matching = sortForms(searchFormsByName(filterFormsByStatus(mainWorkspaceMock.forms, status), query), order);
     for (const size of [8, 16, 24]) {
@@ -232,8 +232,8 @@ test('Combined browsing preserves complete expected results across every page si
 
 test('Empty sources and zero-match pipelines remain valid for all browsing controls', () => {
   for (const source of [[], mainWorkspaceMock.forms]) {
-    for (const status of ['all', 'published', 'draft']) {
-      for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc']) {
+    for (const status of ['all', 'published', 'draft'] as const) {
+      for (const order of ['updated-desc', 'updated-asc', 'name-asc', 'name-desc', 'responses-desc', 'responses-asc'] as const) {
         const matching = sortForms(searchFormsByName(filterFormsByStatus(source, status), 'no matching form exists'), order);
         for (const size of [8, 16, 24]) {
           const result = paginateForms(matching, 3, size);
@@ -261,7 +261,7 @@ test('Missing metrics stay last across page boundaries with deterministic equal-
   for (const [order, numericIds] of [
     ['responses-asc', ['zero', 'numeric-a', 'numeric-b']],
     ['responses-desc', ['numeric-a', 'numeric-b', 'zero']],
-  ]) {
+  ] as const) {
     const sorted = sortForms(forms, order);
     assert.deepEqual(paginateForms(sorted, 1, 3).visibleForms.map(form => form.id), numericIds);
     assert.deepEqual(paginateForms(sorted, 2, 3).visibleForms.map(form => form.id), ['missing-a', 'missing-b', 'missing-c']);

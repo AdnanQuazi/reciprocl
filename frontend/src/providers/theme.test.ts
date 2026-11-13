@@ -6,7 +6,7 @@ import {
   readThemePreference,
   resolveTheme,
   saveThemePreference,
-} from './theme.js';
+} from './theme.ts';
 
 test('only light, dark, and system are valid preferences', () => {
   for (const preference of ['light', 'dark', 'system']) {
@@ -20,7 +20,7 @@ test('only light, dark, and system are valid preferences', () => {
 test('stored preferences restore; missing or invalid values default to system', () => {
   for (const saved of ['light', 'dark', 'system', null, 'auto']) {
     const storage = {
-      getItem(key) {
+      getItem(key: string) {
         assert.equal(key, THEME_STORAGE_KEY);
         return saved;
       },
@@ -39,9 +39,9 @@ test('storage failures do not prevent choosing or reading a theme', () => {
 });
 
 test('saving uses the application-specific key', () => {
-  const saved = [];
+  const saved: Array<[string, string]> = [];
   saveThemePreference('light', {
-    setItem(key, value) { saved.push([key, value]); },
+    setItem(key: string, value: string) { saved.push([key, value]); },
   });
   assert.deepEqual(saved, [[THEME_STORAGE_KEY, 'light']]);
 });
