@@ -21,8 +21,17 @@ jobs:
       - name: Run Ruff Linter
         run: pip install ruff && ruff check .
 
-      - name: Run Frontend Linting
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Verify Frontend
         working-directory: ./frontend
         run: |
           yarn install --frozen-lockfile
           yarn lint
+          yarn test
+          yarn build

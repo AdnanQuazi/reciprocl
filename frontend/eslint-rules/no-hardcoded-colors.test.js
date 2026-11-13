@@ -1,10 +1,12 @@
 import { RuleTester } from 'eslint';
+import tseslint from 'typescript-eslint';
 import rule from './no-hardcoded-colors.js';
 
 const tester = new RuleTester({
   languageOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    parser: tseslint.parser,
     parserOptions: { ecmaFeatures: { jsx: true } },
   },
 });
@@ -22,6 +24,7 @@ tester.run('no-hardcoded-colors', rule, {
     fixture("cva('bg§primary text§primary§foreground', { variants: { kind: { info: 'bg§info text§info§foreground' } } })"),
     fixture("const label = 'bg§red§500'; const url = 'https://example.com/bg§red§500'; const note = 'text§white is an example';"),
     fixture("const config = { title: 'bg§black', style: { backgroundColor: '#ff0000' } };"),
+    { filename: 'sample.tsx', code: fixture('<div className={"bg§background" as const} />') },
   ],
   invalid: [
     {
@@ -62,6 +65,11 @@ tester.run('no-hardcoded-colors', rule, {
     },
     {
       code: fixture("const buttonClasses = 'hover:bg§blue§600';"),
+      errors: errors(1),
+    },
+    {
+      filename: 'sample.tsx',
+      code: fixture("const classes = ({ 'dark:bg§blue§600': active } satisfies Record<string, boolean>);"),
       errors: errors(1),
     },
   ],
