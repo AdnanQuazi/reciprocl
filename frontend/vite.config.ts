@@ -2,8 +2,7 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-// @ts-expect-error - proxyOptions is not typed
-import proxyOptions from "./proxyOptions";
+import proxyOptions from "./proxyOptions.ts";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({

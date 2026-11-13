@@ -118,6 +118,12 @@ export default {
         case 'CallExpression':
           for (const argument of node.arguments) inspect(argument, objectKeysAreClasses);
           break;
+        case 'TSAsExpression':
+        case 'TSSatisfiesExpression':
+        case 'TSNonNullExpression':
+        case 'TSTypeAssertion':
+          inspect(node.expression, objectKeysAreClasses);
+          break;
         default:
           break;
       }
