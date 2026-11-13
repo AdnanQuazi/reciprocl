@@ -2,12 +2,13 @@ import { useId } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import type { SortOrder, StatusFilter } from '../types';
 
 const statusFilters = [
   { value: 'all', label: 'All' },
   { value: 'published', label: 'Published' },
   { value: 'draft', label: 'Drafts' },
-];
+] as const;
 
 const sortOptions = [
   { value: 'updated-desc', label: 'Last updated, newest first', shortLabel: 'Last updated' },
@@ -16,9 +17,20 @@ const sortOptions = [
   { value: 'name-desc', label: 'Form name, Z–A', shortLabel: 'Name Z–A' },
   { value: 'responses-desc', label: 'Response count, highest first', shortLabel: 'Most responses' },
   { value: 'responses-asc', label: 'Response count, lowest first', shortLabel: 'Fewest responses' },
-];
+] as const;
 
-export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, onSortChange }) {
+interface FormsToolbarProps {
+  statusFilter: StatusFilter;
+  onStatusChange: (status: StatusFilter) => void;
+  sortOrder: SortOrder;
+  onSortChange: (order: SortOrder) => void;
+}
+
+function isSortOrder(value: string): value is SortOrder {
+  return sortOptions.some(option => option.value === value);
+}
+
+export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, onSortChange }: FormsToolbarProps) {
   const noticeId = useId();
 
   return (
@@ -41,7 +53,7 @@ export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, 
       </div>
 
       <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-3">
-        <Select value={sortOrder} onValueChange={onSortChange}>
+        <Select value={sortOrder} onValueChange={value => { if (isSortOrder(value)) onSortChange(value); }}>
           <SelectTrigger variant="toolbar" size="compact" className="max-w-full" aria-label="Sort forms">
             <SelectValue>{sortOptions.find(option => option.value === sortOrder)?.shortLabel}</SelectValue>
           </SelectTrigger>

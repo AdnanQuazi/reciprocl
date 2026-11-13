@@ -3,6 +3,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+interface FormsPaginationProps {
+  range: { start: number; end: number };
+  totalCount: number;
+  currentPage: number;
+  pageCount: number;
+  pageSize: number;
+  pageSizeOptions: readonly number[];
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+  disabled?: boolean;
+}
+
 export default function FormsPagination({
   range,
   totalCount,
@@ -13,14 +25,14 @@ export default function FormsPagination({
   onPageChange,
   onPageSizeChange,
   disabled = true,
-}) {
+}: FormsPaginationProps) {
   const pageSizeId = useId();
   const noticeId = useId();
   const pageSummaryId = useId();
-  const pageButtons = useRef({});
+  const pageButtons = useRef<Record<number, HTMLButtonElement | null>>({});
   const pageNumbers = Array.from({ length: pageCount }, (_, index) => index + 1);
 
-  function navigateToPage(page) {
+  function navigateToPage(page: number) {
     // Keep focus within pagination when the activated boundary control disables.
     if (page === 1 || page === pageCount) pageButtons.current[page]?.focus();
     onPageChange?.(page);

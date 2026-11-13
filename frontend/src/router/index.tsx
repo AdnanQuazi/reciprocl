@@ -24,7 +24,7 @@ function AppRoutes() {
             </FrappeProvider>
           }
         />
-        {import.meta.env.DEV && (
+        {DevPreview && (
           <Route path="/dev-preview" element={<DevPreview />} />
         )}
         {/* 404 fallback */}

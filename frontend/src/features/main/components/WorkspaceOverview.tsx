@@ -1,7 +1,10 @@
 import { UserRoundPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import type { Workspace, WorkspaceSummary } from '../types';
 
-export default function WorkspaceOverview({ workspace, summary }) {
+export default function WorkspaceOverview({
+  workspace, summary,
+}: { workspace: Workspace; summary: WorkspaceSummary }) {
   return (
     <section aria-labelledby="workspace-title" className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       <div className="min-w-0">

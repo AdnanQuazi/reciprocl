@@ -1,8 +1,18 @@
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import type { RefObject, ReactNode } from 'react';
+import type { LucideIcon } from 'lucide-react';
+import type { ButtonProps } from '@/components/ui/button';
 
-export default function Header({ search, actions, navigationTrigger, searchInputRef }) {
+interface HeaderProps {
+  search: { label: string; placeholder: string; value: string; onValueChange: (value: string) => void };
+  actions: readonly { id: string; label: string; variant: ButtonProps['variant']; icon?: LucideIcon }[];
+  navigationTrigger: ReactNode;
+  searchInputRef: RefObject<HTMLInputElement | null>;
+}
+
+export default function Header({ search, actions, navigationTrigger, searchInputRef }: HeaderProps) {
   return (
     <header className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border bg-card px-4 py-2 text-card-foreground md:px-8">
       <div className="flex w-full min-w-0 items-center gap-3 md:w-auto">

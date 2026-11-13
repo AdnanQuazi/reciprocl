@@ -2,8 +2,9 @@ import { useId } from 'react';
 import { ChevronRight, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import type { SidebarProps } from './types';
 
-export default function WorkspaceNavigation({ groups }) {
+export default function WorkspaceNavigation({ groups }: { groups: SidebarProps['workspaceGroups'] }) {
   const titleId = useId();
   return (
     <nav aria-labelledby={titleId} className="mt-8">

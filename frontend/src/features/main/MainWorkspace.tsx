@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ChartColumn, FileText, Globe, LockKeyhole, PanelsTopLeft, Plus, Users, Zap } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import reciproclLogo from '@/assets/reciprocl-logo.png';
 import AppShell from '@/components/layout/AppShell';
 import Sidebar from '@/components/layout/Sidebar';
@@ -12,22 +13,23 @@ import FormsTable from './components/FormsTable';
 import FormsPagination from './components/FormsPagination';
 import SupportingActions from './components/SupportingActions';
 import useMainWorkspace from './hooks/useMainWorkspace';
+import type { MainWorkspaceData, PrimaryNavigationId, WorkspaceGroupId } from './types';
 
-const navigationIcons = { forms: FileText, contacts: Users, automations: Zap, insights: ChartColumn, pages: PanelsTopLeft };
-const groupIcons = { private: LockKeyhole, shared: Globe };
+const navigationIcons: Record<PrimaryNavigationId, LucideIcon> = { forms: FileText, contacts: Users, automations: Zap, insights: ChartColumn, pages: PanelsTopLeft };
+const groupIcons: Record<WorkspaceGroupId, LucideIcon> = { private: LockKeyhole, shared: Globe };
 const brand = { name: 'Reciprocl', logo: reciproclLogo };
 const headerActions = [
   { id: 'brandKit', label: 'Brand kit', variant: 'ghost', icon: Globe },
   { id: 'createForm', label: 'Create form', variant: 'default', icon: Plus },
-];
+] as const;
 
-export default function MainWorkspace({ data }) {
+export default function MainWorkspace({ data }: { data: MainWorkspaceData }) {
   const {
     statusFilter, onStatusChange, searchQuery, onSearchChange, sortOrder, onSortChange,
     visibleForms, range, totalCount, currentPage, pageCount,
     pageSize, pageSizeOptions, onPageChange, onPageSizeChange, onClearFilters,
   } = useMainWorkspace(data.forms);
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const previousTitle = document.title;

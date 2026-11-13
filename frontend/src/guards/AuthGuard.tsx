@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getAppBasePath } from '../lib/frappe';
 
@@ -10,7 +11,7 @@ import { getAppBasePath } from '../lib/frappe';
  * Usage:
  *   <Route path="/" element={<AuthGuard><Dashboard /></AuthGuard>} />
  */
-export default function AuthGuard({ children }) {
+export default function AuthGuard({ children }: { children: ReactNode }) {
   const { isLoggedIn, isLoading } = useAuth();
 
   useEffect(() => {

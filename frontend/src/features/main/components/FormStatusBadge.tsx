@@ -1,7 +1,8 @@
 import { Circle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import type { PublishingStatus } from '../types';
 
-export default function FormStatusBadge({ status }) {
+export default function FormStatusBadge({ status }: { status: PublishingStatus }) {
   const isLive = status === 'published';
 
   return (

@@ -1,7 +1,9 @@
 import { Database, Globe, Mail, MessageCircle, Plug, Plus, Table2, Zap } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { Integration, IntegrationIcon } from '../types';
 
-const integrationIcons = {
+const integrationIcons: Record<IntegrationIcon, LucideIcon> = {
   message: MessageCircle,
   database: Database,
   web: Globe,
@@ -12,7 +14,9 @@ const integrationIcons = {
 const visibleLimit = 3;
 const stackingOrder = ['z-30', 'z-20', 'z-10'];
 
-export default function IntegrationIndicators({ integrations = [] }) {
+export default function IntegrationIndicators({
+  integrations = [],
+}: { integrations?: readonly Integration[] | null }) {
   const items = integrations ?? [];
 
   if (items.length === 0) {

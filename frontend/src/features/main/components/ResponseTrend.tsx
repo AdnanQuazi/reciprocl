@@ -3,7 +3,7 @@ const width = 100;
 const height = 24;
 const padding = 2;
 
-export default function ResponseTrend({ values }) {
+export default function ResponseTrend({ values }: { values: readonly number[] | null }) {
   if (!Array.isArray(values) || values.length < 2 || !values.every(Number.isFinite)) {
     return (
       <span className="text-xs text-muted-foreground">
@@ -30,10 +30,11 @@ export default function ResponseTrend({ values }) {
     x: (points[index].x + point.x) / 2,
     y: (points[index].y + point.y) / 2,
   }));
+  const lastPoint = points[points.length - 1];
   const path = [
     `M ${points[0].x} ${points[0].y}`,
     ...midpoints.map((point, index) => `Q ${points[index].x} ${points[index].y} ${point.x} ${point.y}`),
-    `Q ${points.at(-1).x} ${points.at(-1).y} ${points.at(-1).x} ${points.at(-1).y}`,
+    `Q ${lastPoint.x} ${lastPoint.y} ${lastPoint.x} ${lastPoint.y}`,
   ].join(' ');
 
   return (

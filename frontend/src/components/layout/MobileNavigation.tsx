@@ -3,16 +3,17 @@ import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import SidebarContent from './SidebarContent';
+import type { SidebarProps } from './types';
 
 // Keep this query aligned with Tailwind's default md breakpoint.
 const desktopQuery = '(min-width: 48rem)';
 
-export default function MobileNavigation(props) {
+export default function MobileNavigation(props: SidebarProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const desktop = window.matchMedia(desktopQuery);
-    const closeOnDesktop = event => {
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
     desktop.addEventListener('change', closeOnDesktop);

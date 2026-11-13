@@ -1,16 +1,20 @@
 import { useId } from 'react';
 import { BriefcaseBusiness, Building2, CalendarDays, ContactRound, FileText, LifeBuoy, Link2, Mail, MessageCircle, MoreHorizontal, Phone, Ticket, UserRound } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import FormStatusBadge from '@/features/main/components/FormStatusBadge';
 import IntegrationIndicators from '@/features/main/components/IntegrationIndicators';
 import ResponseTrend from '@/features/main/components/ResponseTrend';
+import type { FormIcon, FormRecord } from '../types';
 
-const formIcons = { file: FileText, briefcase: BriefcaseBusiness, message: MessageCircle, calendar: CalendarDays, support: LifeBuoy, phone: Phone, mail: Mail };
-const connectionIcons = { 'CRM Lead': UserRound, 'Job Applicant': BriefcaseBusiness, Customer: Building2, 'CRM Contact': ContactRound, Ticket };
+const formIcons: Record<FormIcon, LucideIcon> = { file: FileText, briefcase: BriefcaseBusiness, message: MessageCircle, calendar: CalendarDays, support: LifeBuoy, phone: Phone, mail: Mail };
+const connectionIcons: Record<string, LucideIcon> = { 'CRM Lead': UserRound, 'Job Applicant': BriefcaseBusiness, Customer: Building2, 'CRM Contact': ContactRound, Ticket };
 
-export default function FormsTable({ forms, workspaceName, isSourceEmpty = false, onClearFilters }) {
+export default function FormsTable({
+  forms, workspaceName, isSourceEmpty = false, onClearFilters,
+}: { forms: readonly FormRecord[]; workspaceName: string; isSourceEmpty?: boolean; onClearFilters?: () => void }) {
   const scrollHintId = useId();
 
   if (forms.length === 0) {
@@ -56,7 +60,7 @@ export default function FormsTable({ forms, workspaceName, isSourceEmpty = false
         <TableBody variant="listing">
           {forms.map(form => {
             const Icon = formIcons[form.icon] ?? FileText;
-            const ConnectionIcon = connectionIcons[form.connection] ?? Link2;
+            const ConnectionIcon = form.connection ? connectionIcons[form.connection] ?? Link2 : Link2;
 
             return (
               <TableRow key={form.id} variant="listing">
@@ -86,10 +90,10 @@ export default function FormsTable({ forms, workspaceName, isSourceEmpty = false
                   <ResponseTrend values={form.trend} />
                 </TableCell>
                 <TableCell variant="listing" className="text-right">
-                  {Number.isFinite(form.responses) ? (
+                  {typeof form.responses === 'number' && Number.isFinite(form.responses) ? (
                     <>
                       <p className="text-sm font-semibold">{form.responses.toLocaleString('en-US')}</p>
-                      <p className="type-micro text-muted-foreground">{Number.isFinite(form.completionPercentage) ? `${form.completionPercentage}% completed` : 'Completion unavailable'}</p>
+                      <p className="type-micro text-muted-foreground">{typeof form.completionPercentage === 'number' && Number.isFinite(form.completionPercentage) ? `${form.completionPercentage}% completed` : 'Completion unavailable'}</p>
                     </>
                   ) : <span className="text-xs text-muted-foreground"><span aria-hidden="true">—</span><span className="sr-only">No response data</span></span>}
                 </TableCell>

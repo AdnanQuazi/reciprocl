@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import WorkspaceNavigation from './WorkspaceNavigation';
+import type { SidebarProps } from './types';
 
-export default function SidebarContent({ brand, accountLabel, navigation, workspaceGroups, mobile = false }) {
+export default function SidebarContent({
+  brand, accountLabel, navigation, workspaceGroups, mobile = false,
+}: SidebarProps & { mobile?: boolean }) {
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col bg-card text-card-foreground">
       <div className={cn('flex h-14 shrink-0 items-center gap-3 border-b border-border px-4', mobile && 'pr-12')}>
