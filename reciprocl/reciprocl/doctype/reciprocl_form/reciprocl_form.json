@@ -11,6 +11,11 @@
   "form_title",
   "form_key",
   "status",
+  "workspace",
+  "visibility",
+  "creation_mode",
+  "source_doctype",
+  "response_doctype",
   "target_doctype",
   "section_break_schema",
   "schema_json",
@@ -43,11 +48,49 @@
    "options": "Draft\nPublished\nClosed"
   },
   {
+   "fieldname": "workspace",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Workspace",
+   "options": "Reciprocl Workspace"
+  },
+  {
+   "default": "Private",
+   "fieldname": "visibility",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Visibility",
+   "options": "Private\nShared"
+  },
+  {
+   "default": "Scratch",
+   "fieldname": "creation_mode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Creation Mode",
+   "options": "Scratch\nFrom DocType"
+  },
+  {
+   "depends_on": "eval:doc.creation_mode=='From DocType'",
+   "fieldname": "source_doctype",
+   "fieldtype": "Link",
+   "label": "Source DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "response_doctype",
+   "fieldtype": "Data",
+   "label": "Response DocType",
+   "read_only": 1,
+   "description": "DocType storing responses for this form."
+  },
+  {
    "fieldname": "target_doctype",
    "fieldtype": "Data",
-   "label": "Target DocType",
+   "label": "Target DocType (Deprecated Alias)",
    "read_only": 1,
-   "description": "Auto-generated DocType storing this form's responses as real SQL columns."
+   "hidden": 1
   },
   {
    "fieldname": "section_break_schema",
@@ -72,11 +115,11 @@
    "fieldtype": "Code",
    "label": "Integration JSON",
    "options": "JSON",
-   "description": "Phase 3: field mappings to HR, CRM, ERPNext DocTypes."
+   "description": "Legacy field mappings; Reciprocl Form Integration DocType preferred."
   }
  ],
  "links": [],
- "modified": "2026-10-29 00:00:00.000000",
+ "modified": "2026-11-13 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Reciprocl",
  "name": "Reciprocl Form",
@@ -94,6 +137,13 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "All",
+   "write": 1
   }
  ],
  "sort_field": "modified",
@@ -102,4 +152,3 @@
  "title_field": "form_title",
  "track_changes": 0
 }
-

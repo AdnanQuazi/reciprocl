@@ -9,6 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "form",
+  "response_doctype",
   "response_doc",
   "submitted_at",
   "column_break_1",
@@ -27,12 +28,20 @@
    "reqd": 1
   },
   {
+   "fieldname": "response_doctype",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Response DocType",
+   "read_only": 1,
+   "description": "DocType where the response payload was saved."
+  },
+  {
    "fieldname": "response_doc",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Response Doc",
    "read_only": 1,
-   "description": "Name/ID of the row in the target DocType."
+   "description": "Name/ID of the row in the response DocType."
   },
   {
    "fieldname": "submitted_at",
@@ -66,7 +75,7 @@
   }
  ],
  "links": [],
- "modified": "2026-10-29 00:00:00.000000",
+ "modified": "2026-11-13 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Reciprocl",
  "name": "Reciprocl Submission",
@@ -84,6 +93,13 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "All",
+   "write": 1
   }
  ],
  "sort_field": "submitted_at",
@@ -92,4 +108,3 @@
  "title_field": "form",
  "track_changes": 0
 }
-

@@ -1,0 +1,42 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-11-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "form_fieldname",
+  "doctype_fieldname"
+ ],
+ "fields": [
+  {
+   "fieldname": "form_fieldname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Form Field Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "doctype_fieldname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "DocType Field Name",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-11-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Reciprocl",
+ "name": "Reciprocl Integration Field Map",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}
+

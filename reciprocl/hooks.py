@@ -21,3 +21,5 @@ add_to_apps_screen = [
 website_route_rules = [
 	{"from_route": "/reciprocl/<path:app_path>", "to_route": "reciprocl"},
 ]
+
+scheduler_events = {"daily": ["reciprocl.api.analytics.record_daily_stats"]}
