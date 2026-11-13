@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "format:RFA-{######}",
+ "creation": "2026-11-13 00:00:00.000000",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "form",
+  "date",
+  "submission_count",
+  "completion_count"
+ ],
+ "fields": [
+  {
+   "fieldname": "form",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Form",
+   "options": "Reciprocl Form",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "submission_count",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Submission Count"
+  },
+  {
+   "default": "0",
+   "fieldname": "completion_count",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Completion Count"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Reciprocl",
+ "name": "Reciprocl Form Analytics",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "All",
+   "write": 1
+  }
+ ],
+ "sort_field": "date",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "form",
+ "track_changes": 0
+}
+
