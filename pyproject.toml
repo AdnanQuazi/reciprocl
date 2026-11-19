@@ -26,6 +26,7 @@ packages = []
 [tool.ruff]
 line-length = 110
 target-version = "py314"
+exclude = ["frontend"]
 
 [tool.ruff.lint]
 select = [
