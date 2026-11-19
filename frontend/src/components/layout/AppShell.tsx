@@ -4,7 +4,11 @@ export default function AppShell({
   sidebar,
   header,
   children,
-}: { sidebar: ReactNode; header: ReactNode; children: ReactNode }) {
+}: {
+  sidebar: ReactNode;
+  header: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <div className="relative flex h-dvh overflow-hidden bg-background text-foreground">
       <a

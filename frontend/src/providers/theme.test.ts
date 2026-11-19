@@ -31,8 +31,12 @@ test('stored preferences restore; missing or invalid values default to system', 
 
 test('storage failures do not prevent choosing or reading a theme', () => {
   const blocked = {
-    getItem() { throw new Error('Storage blocked'); },
-    setItem() { throw new Error('Storage blocked'); },
+    getItem() {
+      throw new Error('Storage blocked');
+    },
+    setItem() {
+      throw new Error('Storage blocked');
+    },
   };
   assert.equal(readThemePreference(blocked), 'system');
   assert.doesNotThrow(() => saveThemePreference('dark', blocked));
@@ -41,7 +45,9 @@ test('storage failures do not prevent choosing or reading a theme', () => {
 test('saving uses the application-specific key', () => {
   const saved: Array<[string, string]> = [];
   saveThemePreference('light', {
-    setItem(key: string, value: string) { saved.push([key, value]); },
+    setItem(key: string, value: string) {
+      saved.push([key, value]);
+    },
   });
   assert.deepEqual(saved, [[THEME_STORAGE_KEY, 'light']]);
 });

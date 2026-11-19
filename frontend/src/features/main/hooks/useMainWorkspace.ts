@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { filterFormsByStatus, paginateForms, searchFormsByName, sortForms } from '@/features/main/utils/formSelectors';
+import {
+  filterFormsByStatus,
+  paginateForms,
+  searchFormsByName,
+  sortForms,
+} from '@/features/main/utils/formSelectors';
 import type { FormRecord, SortOrder, StatusFilter } from '@/features/main/types';
 
 const pageSizeOptions: readonly number[] = [8, 16, 24];
@@ -49,10 +54,17 @@ export default function useMainWorkspace(forms: readonly FormRecord[]) {
   }
 
   return {
-    statusFilter, onStatusChange,
-    searchQuery, onSearchChange,
-    sortOrder, onSortChange,
-    pageSize, pageSizeOptions, onPageChange, onPageSizeChange, onClearFilters,
+    statusFilter,
+    onStatusChange,
+    searchQuery,
+    onSearchChange,
+    sortOrder,
+    onSortChange,
+    pageSize,
+    pageSizeOptions,
+    onPageChange,
+    onPageSizeChange,
+    onClearFilters,
     ...pagination,
   };
 }

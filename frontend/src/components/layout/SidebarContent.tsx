@@ -4,12 +4,24 @@ import WorkspaceNavigation from './WorkspaceNavigation';
 import type { SidebarProps } from './types';
 
 export default function SidebarContent({
-  brand, accountLabel, navigation, workspaceGroups, mobile = false,
+  brand,
+  accountLabel,
+  navigation,
+  workspaceGroups,
+  mobile = false,
 }: SidebarProps & { mobile?: boolean }) {
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col bg-card text-card-foreground">
-      <div className={cn('flex h-14 shrink-0 items-center gap-3 border-b border-border px-4', mobile && 'pr-12')}>
-        <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-mark text-sm font-semibold text-brand-mark-foreground shadow-sm">
+      <div
+        className={cn(
+          'flex h-14 shrink-0 items-center gap-3 border-b border-border px-4',
+          mobile && 'pr-12'
+        )}
+      >
+        <span
+          aria-hidden="true"
+          className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-mark text-sm font-semibold text-brand-mark-foreground shadow-sm"
+        >
           {brand.monogram}
         </span>
         <div className="min-w-0">
@@ -24,12 +36,21 @@ export default function SidebarContent({
             {navigation.map(({ id, label, icon: Icon, current }) => (
               <li key={id}>
                 {current ? (
-                  <span aria-current="page" className="flex h-8 items-center gap-2 rounded-md bg-muted px-3 text-xs font-medium">
+                  <span
+                    aria-current="page"
+                    className="flex h-8 items-center gap-2 rounded-md bg-muted px-3 text-xs font-medium"
+                  >
                     <Icon aria-hidden="true" className="size-4 shrink-0" />
                     {label}
                   </span>
                 ) : (
-                  <Button variant="navigation" size="sm" disabled className="w-full" title={`${label} — unavailable`}>
+                  <Button
+                    variant="navigation"
+                    size="sm"
+                    disabled
+                    className="w-full"
+                    title={`${label} — unavailable`}
+                  >
                     <Icon aria-hidden="true" className="size-4" />
                     {label}
                     <span className="sr-only"> — unavailable</span>

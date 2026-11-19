@@ -1,7 +1,13 @@
 import { useId } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { SortOrder, StatusFilter } from '../types';
 
 const statusFilters = [
@@ -27,15 +33,22 @@ interface FormsToolbarProps {
 }
 
 function isSortOrder(value: string): value is SortOrder {
-  return sortOptions.some(option => option.value === value);
+  return sortOptions.some((option) => option.value === value);
 }
 
-export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, onSortChange }: FormsToolbarProps) {
+export default function FormsToolbar({
+  statusFilter,
+  onStatusChange,
+  sortOrder,
+  onSortChange,
+}: FormsToolbarProps) {
   const noticeId = useId();
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-border pb-3">
-      <p id={noticeId} className="sr-only">Changing the view is unavailable.</p>
+      <p id={noticeId} className="sr-only">
+        Changing the view is unavailable.
+      </p>
       <div role="group" aria-label="Filter forms by status" className="flex items-center gap-6">
         {statusFilters.map(({ value, label }) => (
           <Button
@@ -53,19 +66,51 @@ export default function FormsToolbar({ statusFilter, onStatusChange, sortOrder, 
       </div>
 
       <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-3">
-        <Select value={sortOrder} onValueChange={value => { if (isSortOrder(value)) onSortChange(value); }}>
-          <SelectTrigger variant="toolbar" size="compact" className="max-w-full" aria-label="Sort forms">
-            <SelectValue>{sortOptions.find(option => option.value === sortOrder)?.shortLabel}</SelectValue>
+        <Select
+          value={sortOrder}
+          onValueChange={(value) => {
+            if (isSortOrder(value)) onSortChange(value);
+          }}
+        >
+          <SelectTrigger
+            variant="toolbar"
+            size="compact"
+            className="max-w-full"
+            aria-label="Sort forms"
+          >
+            <SelectValue>
+              {sortOptions.find((option) => option.value === sortOrder)?.shortLabel}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent position="popper" align="end">
-            {sortOptions.map(({ value, label }) => <SelectItem key={value} value={value}>{label}</SelectItem>)}
+            {sortOptions.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <div role="group" aria-label="Forms display" className="flex items-center gap-1">
-          <Button variant="view" size="icon-xs" disabled aria-pressed="true" aria-label="List view" aria-describedby={noticeId} title="List view selected">
+          <Button
+            variant="view"
+            size="icon-xs"
+            disabled
+            aria-pressed="true"
+            aria-label="List view"
+            aria-describedby={noticeId}
+            title="List view selected"
+          >
             <List aria-hidden="true" className="size-4" />
           </Button>
-          <Button variant="view" size="icon-xs" disabled aria-pressed="false" aria-label="Grid view — unavailable" aria-describedby={noticeId} title="Grid view — unavailable">
+          <Button
+            variant="view"
+            size="icon-xs"
+            disabled
+            aria-pressed="false"
+            aria-label="Grid view — unavailable"
+            aria-describedby={noticeId}
+            title="Grid view — unavailable"
+          >
             <LayoutGrid aria-hidden="true" className="size-4" />
           </Button>
         </div>

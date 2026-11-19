@@ -9,22 +9,22 @@ interface SortableRecord {
 
 export function filterFormsByStatus<T extends { status: PublishingStatus }>(
   forms: readonly T[],
-  statusFilter: StatusFilter = 'all',
+  statusFilter: StatusFilter = 'all'
 ): T[] {
-  return forms.filter(form => statusFilter === 'all' || form.status === statusFilter);
+  return forms.filter((form) => statusFilter === 'all' || form.status === statusFilter);
 }
 
 export function searchFormsByName<T extends { name: string }>(
   forms: readonly T[],
-  query = '',
+  query = ''
 ): T[] {
   const normalizedQuery = query.trim().toLowerCase();
-  return forms.filter(form => form.name.toLowerCase().includes(normalizedQuery));
+  return forms.filter((form) => form.name.toLowerCase().includes(normalizedQuery));
 }
 
 export function sortForms<T extends SortableRecord>(
   forms: readonly T[],
-  sortOrder: SortOrder = 'updated-desc',
+  sortOrder: SortOrder = 'updated-desc'
 ): T[] {
   const direction = sortOrder.endsWith('-asc') ? 1 : -1;
 
@@ -40,8 +40,10 @@ export function sortForms<T extends SortableRecord>(
         break;
       case 'responses-asc':
       case 'responses-desc': {
-        const aCount = typeof a.responses === 'number' && Number.isFinite(a.responses) ? a.responses : null;
-        const bCount = typeof b.responses === 'number' && Number.isFinite(b.responses) ? b.responses : null;
+        const aCount =
+          typeof a.responses === 'number' && Number.isFinite(a.responses) ? a.responses : null;
+        const bCount =
+          typeof b.responses === 'number' && Number.isFinite(b.responses) ? b.responses : null;
         const aMissing = aCount === null;
         const bMissing = bCount === null;
         // Missing values stay last regardless of the numeric sort direction.
@@ -60,11 +62,7 @@ export function sortForms<T extends SortableRecord>(
   });
 }
 
-export function paginateForms<T>(
-  forms: readonly T[],
-  page = 1,
-  pageSize = 8,
-): PaginationResult<T> {
+export function paginateForms<T>(forms: readonly T[], page = 1, pageSize = 8): PaginationResult<T> {
   if (!Number.isInteger(pageSize) || pageSize < 1) {
     throw new RangeError('Page size must be a positive integer.');
   }

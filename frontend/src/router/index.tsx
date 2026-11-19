@@ -5,9 +5,7 @@ import AuthGuard from '../guards/AuthGuard';
 import NotFound from '../pages/NotFound';
 
 const Dashboard = lazy(() => import('../pages/Dashboard'));
-const DevPreview = import.meta.env.DEV
-  ? lazy(() => import('../pages/DevPreview'))
-  : null;
+const DevPreview = import.meta.env.DEV ? lazy(() => import('../pages/DevPreview')) : null;
 
 function AppRoutes() {
   return (
@@ -24,9 +22,7 @@ function AppRoutes() {
             </FrappeProvider>
           }
         />
-        {DevPreview && (
-          <Route path="/dev-preview" element={<DevPreview />} />
-        )}
+        {DevPreview && <Route path="/dev-preview" element={<DevPreview />} />}
         {/* 404 fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>

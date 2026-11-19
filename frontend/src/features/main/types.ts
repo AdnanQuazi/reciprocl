@@ -2,15 +2,11 @@
 export type PublishingStatus = 'published' | 'draft';
 export type StatusFilter = 'all' | PublishingStatus;
 export type SortOrder =
-  | 'updated-desc'
-  | 'updated-asc'
-  | 'name-asc'
-  | 'name-desc'
-  | 'responses-desc'
-  | 'responses-asc';
+  'updated-desc' | 'updated-asc' | 'name-asc' | 'name-desc' | 'responses-desc' | 'responses-asc';
 
 export type FormIcon = 'file' | 'briefcase' | 'message' | 'calendar' | 'support' | 'phone' | 'mail';
-export type IntegrationIcon = 'message' | 'database' | 'web' | 'mail' | 'spreadsheet' | 'automation';
+export type IntegrationIcon =
+  'message' | 'database' | 'web' | 'mail' | 'spreadsheet' | 'automation';
 
 export interface Integration {
   id: string;

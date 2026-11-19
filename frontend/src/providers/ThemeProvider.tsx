@@ -7,9 +7,11 @@ import type { ThemePreference } from './theme';
 const systemThemeQuery = '(prefers-color-scheme: dark)';
 
 function systemIsDark(): boolean {
-  return typeof window !== 'undefined' &&
+  return (
+    typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
-    window.matchMedia(systemThemeQuery).matches;
+    window.matchMedia(systemThemeQuery).matches
+  );
 }
 
 export default function ThemeProvider({ children }: PropsWithChildren) {

@@ -19,7 +19,7 @@ export function readThemePreference(storage?: Pick<Storage, 'getItem'>): ThemePr
 
 export function saveThemePreference(
   preference: ThemePreference,
-  storage?: Pick<Storage, 'setItem'>,
+  storage?: Pick<Storage, 'setItem'>
 ): void {
   try {
     (storage ?? window.localStorage).setItem(THEME_STORAGE_KEY, preference);
@@ -28,9 +28,6 @@ export function saveThemePreference(
   }
 }
 
-export function resolveTheme(
-  preference: ThemePreference,
-  systemIsDark: boolean,
-): ResolvedTheme {
+export function resolveTheme(preference: ThemePreference, systemIsDark: boolean): ResolvedTheme {
   return preference === 'system' ? (systemIsDark ? 'dark' : 'light') : preference;
 }

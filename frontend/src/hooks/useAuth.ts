@@ -1,4 +1,4 @@
-import { useFrappeAuth } from "frappe-react-sdk";
+import { useFrappeAuth } from 'frappe-react-sdk';
 
 type FrappeAuthResult = ReturnType<typeof useFrappeAuth>;
 
@@ -15,7 +15,7 @@ export interface AuthState {
  * directly from frappe-react-sdk -- makes swapping easier later.
  */
 export function useAuth(): AuthState {
-	const { currentUser, isLoading, isValidating, error } = useFrappeAuth();
-	const isLoggedIn = Boolean(currentUser);
-	return { currentUser, isLoggedIn, isLoading, isValidating, error };
+  const { currentUser, isLoading, isValidating, error } = useFrappeAuth();
+  const isLoggedIn = Boolean(currentUser);
+  return { currentUser, isLoggedIn, isLoading, isValidating, error };
 }

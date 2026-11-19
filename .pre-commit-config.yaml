@@ -32,8 +32,8 @@ repos:
   - repo: local
     hooks:
       - id: frontend-check
-        name: "Frontend Typecheck & Lint"
-        entry: bash -c "cd frontend && yarn typecheck && yarn lint"
+        name: "Frontend Format, Typecheck & Lint"
+        entry: bash -c "cd frontend && yarn format && yarn typecheck && yarn lint"
         language: system
         files: ^frontend/
         pass_filenames: false

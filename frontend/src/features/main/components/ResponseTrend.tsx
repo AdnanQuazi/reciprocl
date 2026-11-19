@@ -20,9 +20,10 @@ export default function ResponseTrend({ values }: { values: readonly number[] | 
   const range = Math.max(0, maximum) - lowerBound;
   const points = values.map((value, index) => {
     const x = padding + (index / (values.length - 1)) * (width - padding * 2);
-    const y = maximum === minimum
-      ? height / 2
-      : height - padding - ((value - lowerBound) / range) * (height - padding * 2);
+    const y =
+      maximum === minimum
+        ? height / 2
+        : height - padding - ((value - lowerBound) / range) * (height - padding * 2);
 
     return { x, y };
   });
@@ -33,7 +34,9 @@ export default function ResponseTrend({ values }: { values: readonly number[] | 
   const lastPoint = points[points.length - 1];
   const path = [
     `M ${points[0].x} ${points[0].y}`,
-    ...midpoints.map((point, index) => `Q ${points[index].x} ${points[index].y} ${point.x} ${point.y}`),
+    ...midpoints.map(
+      (point, index) => `Q ${points[index].x} ${points[index].y} ${point.x} ${point.y}`
+    ),
     `Q ${lastPoint.x} ${lastPoint.y} ${lastPoint.x} ${lastPoint.y}`,
   ].join(' ');
 
@@ -44,7 +47,14 @@ export default function ResponseTrend({ values }: { values: readonly number[] | 
       viewBox={`0 0 ${width} ${height}`}
       className="h-6 w-24 shrink-0 text-chart-1"
     >
-      <path d={path} fill="none" stroke="currentColor" className="stroke-2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={path}
+        fill="none"
+        stroke="currentColor"
+        className="stroke-2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

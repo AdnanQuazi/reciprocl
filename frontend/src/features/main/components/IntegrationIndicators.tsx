@@ -16,7 +16,9 @@ const stackingOrder = ['z-30', 'z-20', 'z-10'];
 
 export default function IntegrationIndicators({
   integrations = [],
-}: { integrations?: readonly Integration[] | null }) {
+}: {
+  integrations?: readonly Integration[] | null;
+}) {
   const items = integrations ?? [];
 
   if (items.length === 0) {
@@ -33,14 +35,22 @@ export default function IntegrationIndicators({
   return (
     <div>
       <span className="sr-only">
-        {items.length} {items.length === 1 ? 'integration' : 'integrations'}: {items.map(item => item.name).join(', ')}.
+        {items.length} {items.length === 1 ? 'integration' : 'integrations'}:{' '}
+        {items.map((item) => item.name).join(', ')}.
       </span>
       <div aria-hidden="true" className="isolate flex items-center -space-x-1.5">
         {items.slice(0, visibleLimit).map((item, index) => {
           const Icon = integrationIcons[item.icon] ?? Plug;
 
           return (
-            <span key={item.id} title={item.name} className={cn('relative flex size-6 shrink-0 items-center justify-center rounded-full border border-card bg-integration text-integration-foreground shadow-xs', stackingOrder[index])}>
+            <span
+              key={item.id}
+              title={item.name}
+              className={cn(
+                'relative flex size-6 shrink-0 items-center justify-center rounded-full border border-card bg-integration text-integration-foreground shadow-xs',
+                stackingOrder[index]
+              )}
+            >
               <Icon className="size-3.5" />
             </span>
           );

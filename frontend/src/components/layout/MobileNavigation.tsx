@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import SidebarContent from './SidebarContent';
 import type { SidebarProps } from './types';
 
@@ -30,7 +36,7 @@ export default function MobileNavigation(props: SidebarProps) {
       <SheetContent
         side="left"
         className="gap-0"
-        onCloseAutoFocus={event => {
+        onCloseAutoFocus={(event) => {
           // The trigger is hidden after resizing to desktop; focus the workspace.
           if (window.matchMedia(desktopQuery).matches) {
             event.preventDefault();
@@ -39,7 +45,9 @@ export default function MobileNavigation(props: SidebarProps) {
         }}
       >
         <SheetTitle className="sr-only">Workspace navigation</SheetTitle>
-        <SheetDescription className="sr-only">Browse navigation and expand workspace groups. Unavailable destinations are disabled.</SheetDescription>
+        <SheetDescription className="sr-only">
+          Browse navigation and expand workspace groups. Unavailable destinations are disabled.
+        </SheetDescription>
         <SidebarContent {...props} mobile />
       </SheetContent>
     </Sheet>
