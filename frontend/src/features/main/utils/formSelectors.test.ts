@@ -271,7 +271,7 @@ test('Missing metrics stay last across page boundaries with deterministic equal-
 
 test('Long form names remain intact through normalized search, sorting, and pagination', () => {
   const name = `Demo ${'long form name '.repeat(40)}ending`;
-  const forms = Object.freeze([Object.freeze({ id: 'long-name', name })]);
+  const forms = Object.freeze([Object.freeze({ id: 'long-name', name, status: 'published' as const })]);
   const matching = sortForms(searchFormsByName(filterFormsByStatus(forms), '  FORM NAME  '), 'name-desc');
   assert.equal(paginateForms(matching).visibleForms[0].name, name);
   assert.equal(forms[0].name, name);

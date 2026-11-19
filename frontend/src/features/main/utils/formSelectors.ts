@@ -1,4 +1,4 @@
-import type { PaginationResult, SortOrder, StatusFilter } from '../types.ts';
+import type { PaginationResult, PublishingStatus, SortOrder, StatusFilter } from '../types.ts';
 
 interface SortableRecord {
   id: string;
@@ -7,13 +7,11 @@ interface SortableRecord {
   responses?: number | null;
 }
 
-export function filterFormsByStatus<T>(
+export function filterFormsByStatus<T extends { status: PublishingStatus }>(
   forms: readonly T[],
   statusFilter: StatusFilter = 'all',
 ): T[] {
-  return forms.filter(form => statusFilter === 'all' || (
-    typeof form === 'object' && form !== null && 'status' in form && form.status === statusFilter
-  ));
+  return forms.filter(form => statusFilter === 'all' || form.status === statusFilter);
 }
 
 export function searchFormsByName<T extends { name: string }>(
